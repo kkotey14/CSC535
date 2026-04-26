@@ -1,257 +1,153 @@
 # Golden Echoes
 
-Single-file virtual art gallery for `CSC 535 Project 2`.
+`Golden Echoes` is a single-file virtual art gallery for `CSC 535 Project 2`.
 
-The project is built around one required deliverable:
+The main deliverable is:
 
 - `index.html`
 
-Everything needed for the gallery lives inside that file:
+That file contains the full project:
 
-- HTML structure
-- custom CSS
-- Tailwind CDN config
-- vanilla JavaScript
+- HTML
+- CSS
+- Tailwind CDN setup
+- JavaScript
 - room and artwork data
 - interaction logic
 
-## Project Overview
+## Project Snapshot
 
-This gallery is designed as a scroll-based 2D virtual exhibition using works from the Rijksmuseum. It includes:
+This version of the gallery is built as a top-down 2D route using Rijksmuseum works.
+
+It includes:
 
 - 3 themed rooms
 - 12 artworks total
-- room-to-room movement through scrolling and section jump buttons
-- click-to-open deep-dive overlay for each artwork
-- title, artist, date, description, and official Rijksmuseum link for every piece
-- staged reveal animations as the user scrolls
+- a moving guide bot inside each room plan
+- room switching with buttons and arrow keys
+- artwork deep-dive overlay with title, artist, date, description, and Rijksmuseum link
+- scroll-based reveal animation
 
-## Files In This Repo
+## Files
 
 - `index.html`
-  This is the main project file and the only file required for the assignment deliverable.
+  The full gallery experience and the required assignment file.
 
 - `README.md`
-  This guide for teammates.
+  A short guide for teammates.
 
 - other `.html` files
-  These appear to be older experiments or scratch files. They are not required for running the final gallery unless the team decides to reuse them.
+  Older experiments or scratch files. They are not part of the main submission unless the team chooses to reuse them.
 
-## Requirements
+## Running The Project
 
-You do not need any package manager or build step.
+There is no build step and no package manager.
 
-You only need:
+A simple local server is enough. `Live Server` in VS Code is fine, or any other localhost setup your teammate already uses.
 
-- a web browser
-- a simple local server
+The main thing is to open the project through localhost instead of double-clicking the file, since the page loads external museum images.
 
-## How To Run Locally
+## How The Gallery Works
 
-Because the page loads external museum images, it works better through a small local server than by opening the file directly.
+### Hero
 
-Any simple local server is fine.
+The page opens with an exhibition-style intro section, then moves into the gallery as the user scrolls.
 
-One easy option is VS Code `Live Server`:
+### Rooms
 
-1. Open the folder in VS Code.
-2. Open `index.html` with `Live Server`.
-3. The page should open in the browser automatically.
+There are 3 rooms, and only one room is active at a time.
 
-If someone prefers another local server, that works too. The main idea is just to open the project through `localhost` rather than double-clicking the file.
+Each room has:
 
-## How The App Works
-
-### 1. Hero section
-
-The page opens with a large exhibition-style hero.
-
-Purpose:
-
-- establish the tone of the gallery
-- give the visitor context before they enter the rooms
-- lead users into the rest of the page by scrolling
-
-### 2. Rooms
-
-There are 3 room sections in `index.html`.
-
-Each room contains:
-
-- a room label
 - a title and theme
-- a short descriptive paragraph
-- room metadata
-- buttons to move to another room or open the Rijksmuseum collection
-- a custom art layout generated from JavaScript data
+- short room text
+- room navigation buttons
+- a top-down 2D floor plan
+- 4 artworks placed around the room
 
-### 3. Artwork data
+### Guide Bot
 
-All room and artwork content is stored in the `rooms` array in the JavaScript section near the bottom of `index.html`.
+The small moving avatar in the floor plan is the guide bot.
 
-Each artwork object contains:
+It shows where the visitor is in the room route:
 
-- `shortTitle`
-- `title`
-- `artist`
-- `date`
-- `description`
-- `image`
-- `link`
-- `placement`
+- `Left` and `Right` arrow keys switch rooms
+- `Up` and `Down` move between artwork stops
+- the guide bot moves along the room route instead of staying still
 
-If teammates want to swap art, this is the main place to edit.
+### Artwork Data
 
-### 4. Artwork rendering
+All room content lives in the `rooms` array near the bottom of `index.html`.
 
-The function `buildRooms()` reads the `rooms` array and creates each artwork card dynamically.
+If someone wants to update a work, title, description, or link, that is the first place to check.
 
-This means:
+### Deep Dive Overlay
 
-- teammates do not need to manually hardcode all artwork cards in the HTML
-- changes to artwork content mostly happen in one place
+Clicking a framed artwork opens a larger detail view.
 
-### 5. Deep dive overlay
-
-Clicking an artwork opens a modal-style overlay.
-
-That overlay is filled by:
+That overlay is handled by:
 
 - `populateDeepDive()`
 - `openDeepDive()`
 - `closeDeepDive()`
 
-### 6. Scroll reveal animations
+## Main Parts To Edit
 
-The page uses an `IntersectionObserver` so sections and artwork cards animate in as the user scrolls down.
+### Visual design
 
-The shared CSS class for that system is:
+Look at:
 
-- `.reveal-item`
+- the hero markup near the top of `body`
+- the `.intro-*` CSS rules
+- the `.room-*` and `.art-card` CSS rules
 
-## Suggested Team Workflow
+### Room text or structure
 
-One easy way to keep the work organized is to let each person loosely own a section.
+Look at:
 
-Possible split:
+- the room sections inside `<main class="track" id="roomTrack">`
 
-- Person 1: hero section and overall visual polish
-- Person 2: room text, room sequencing, and navigation buttons
-- Person 3: artwork data, descriptions, museum links, and fact-checking
-- Person 4: QA, responsiveness, deployment, and final cleanup
+### Artwork content
 
-If the team has 3 people instead of 4, the last two parts can just be combined.
+Look at:
 
-## Editing Guide
+- the `rooms` array in the script
 
-### If you are editing the hero
+### Interaction logic
 
-The main places to look are:
-
-- hero HTML near the top of `body`
-- `.intro-*` CSS rules
-
-### If you are editing room copy or layout
-
-The main places to look are:
-
-- the room section markup inside `<main class="track" id="roomTrack">`
-- `.room-*`, `.gallery-cluster`, and `.art-card` CSS
-
-### If you are editing artworks
-
-The main place to look is:
-
-- the `rooms` JavaScript array
-
-### If you are editing interaction logic
-
-The main places to look are:
+Look at:
 
 - `buildRooms()`
-- `scrollToRoom()`
+- `activateRoom()`
+- `focusArtwork()`
+- `animateVisitorToken()`
 - `openDeepDive()`
-- `closeDeepDive()`
-- the reveal animation observer near the bottom
 
-## Important Notes For Teammates
+## Quick Testing
 
-- The assignment asks for all team-written code in a single `index.html` file.
-- It is probably best to keep everything in `index.html` unless the team is making a separate practice version.
-- If you change the artwork list, keep the total at 12 minimum.
-- If you replace any artwork, make sure the Rijksmuseum link still works.
-- If you change the room structure, keep it obvious that each section is a room with a theme.
+Before pushing changes, a teammate should quickly check:
 
-## How To Test Before Pushing
+1. The intro loads first.
+2. Room tabs switch between all 3 rooms.
+3. Each room still has 4 artworks.
+4. The guide bot moves when the artwork focus changes.
+5. Clicking an artwork opens the detail overlay.
+6. The Rijksmuseum link still opens.
+7. The page still looks okay on a smaller screen.
 
-A quick check before pushing:
+## Important Notes
 
-1. The page opens at `http://127.0.0.1:8000/`.
-2. The hero appears first.
-3. Scrolling reveals the rest of the gallery.
-4. Each room still contains 4 artworks.
-5. Clicking an artwork opens the deep-dive overlay.
-6. The overlay shows title, artist, date, description, and museum link.
-7. The layout still works on a narrower browser width.
+- Keep team-written code in `index.html` for the final assignment submission.
+- Keep at least 12 artworks total.
+- Make sure every artwork still has a working Rijksmuseum link.
+- Keep the room themes clear so the gallery still reads as separate spaces.
 
-## How To Deploy Later To The Student Server
+## Deployment Reminder
 
-The final deployment target mentioned in the assignment is:
+The assignment says the final file should be published to:
 
 ```text
 https://prd-stuweb02.southernct.edu/~[username]
 ```
 
-A simple deployment flow would be:
-
-1. Log into the student server with SFTP.
-2. Open the `public_html` folder.
-3. Upload `index.html`.
-4. If the team later uses any separate assets, upload them there too.
-5. Visit the public URL and verify that the page loads.
-
-Before submission, it is worth checking that the public version still matches the current `index.html`.
-
-## Git Basics For Teammates
-
-Clone:
-
-```bash
-git clone https://github.com/kkotey14/CSC535.git
-cd CSC535
-```
-
-Pull latest changes:
-
-```bash
-git pull origin main
-```
-
-Create your own working branch:
-
-```bash
-git checkout -b your-name-section
-```
-
-Stage and commit:
-
-```bash
-git add index.html README.md
-git commit -m "Update gallery section"
-```
-
-Push your branch:
-
-```bash
-git push origin your-name-section
-```
-
-If the team prefers, everyone can also work from `main`, but separate branches usually make merges a little easier.
-
-## Suggested Team Message
-
-Use this in the group chat if needed:
-
-```text
-I’m pushing the latest gallery code to the repo now. Based on whichever section you choose, feel free to make any changes you need. Just try to stay mostly within your section so we don’t overwrite each other’s work. I also added a detailed README with instructions on how to run the project locally, where the main parts of the code live, and what to edit depending on your section.
-```
+When the team is ready, upload the final `index.html` to `public_html` on the student server and test the public URL.
