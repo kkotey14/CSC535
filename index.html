@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -481,6 +482,7 @@
       from {
         width: 0;
       }
+
       to {
         width: 60px;
       }
@@ -545,6 +547,7 @@
       from {
         width: 0;
       }
+
       to {
         width: 100%;
       }
@@ -844,20 +847,97 @@
 
     /* Room-specific art placement.
        Each room uses different proportions so the gallery feels curated rather than templated. */
-    .room-one .art-a { grid-column: 1; grid-row: 1 / span 2; min-height: 570px; --tilt: -1.5deg; }
-    .room-one .art-b { grid-column: 2; grid-row: 1; min-height: 300px; --tilt: 2deg; margin-top: 3rem; }
-    .room-one .art-c { grid-column: 2; grid-row: 2; min-height: 260px; --tilt: 1deg; }
-    .room-one .art-d { grid-column: 1 / span 2; grid-row: 3; min-height: 330px; --tilt: -0.8deg; margin-left: 8%; width: 84%; }
+    .room-one .art-a {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      min-height: 570px;
+      --tilt: -1.5deg;
+    }
 
-    .room-two .art-a { grid-column: 1; grid-row: 1; min-height: 310px; --tilt: -3deg; margin-top: 3rem; }
-    .room-two .art-b { grid-column: 2; grid-row: 1 / span 2; min-height: 560px; --tilt: 1deg; }
-    .room-two .art-c { grid-column: 1; grid-row: 2; min-height: 300px; --tilt: 2deg; }
-    .room-two .art-d { grid-column: 1 / span 2; grid-row: 3; min-height: 300px; --tilt: -1deg; width: 88%; }
+    .room-one .art-b {
+      grid-column: 2;
+      grid-row: 1;
+      min-height: 300px;
+      --tilt: 2deg;
+      margin-top: 3rem;
+    }
 
-    .room-three .art-a { grid-column: 1; grid-row: 1 / span 2; min-height: 590px; --tilt: -1deg; }
-    .room-three .art-b { grid-column: 2; grid-row: 1; min-height: 290px; --tilt: 2deg; margin-top: 4rem; }
-    .room-three .art-c { grid-column: 2; grid-row: 2; min-height: 300px; --tilt: 1deg; }
-    .room-three .art-d { grid-column: 1 / span 2; grid-row: 3; min-height: 300px; --tilt: -2deg; margin-left: 10%; width: 80%; }
+    .room-one .art-c {
+      grid-column: 2;
+      grid-row: 2;
+      min-height: 260px;
+      --tilt: 1deg;
+    }
+
+    .room-one .art-d {
+      grid-column: 1 / span 2;
+      grid-row: 3;
+      min-height: 330px;
+      --tilt: -0.8deg;
+      margin-left: 8%;
+      width: 84%;
+    }
+
+    .room-two .art-a {
+      grid-column: 1;
+      grid-row: 1;
+      min-height: 310px;
+      --tilt: -3deg;
+      margin-top: 3rem;
+    }
+
+    .room-two .art-b {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      min-height: 560px;
+      --tilt: 1deg;
+    }
+
+    .room-two .art-c {
+      grid-column: 1;
+      grid-row: 2;
+      min-height: 300px;
+      --tilt: 2deg;
+    }
+
+    .room-two .art-d {
+      grid-column: 1 / span 2;
+      grid-row: 3;
+      min-height: 300px;
+      --tilt: -1deg;
+      width: 88%;
+    }
+
+    .room-three .art-a {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      min-height: 590px;
+      --tilt: -1deg;
+    }
+
+    .room-three .art-b {
+      grid-column: 2;
+      grid-row: 1;
+      min-height: 290px;
+      --tilt: 2deg;
+      margin-top: 4rem;
+    }
+
+    .room-three .art-c {
+      grid-column: 2;
+      grid-row: 2;
+      min-height: 300px;
+      --tilt: 1deg;
+    }
+
+    .room-three .art-d {
+      grid-column: 1 / span 2;
+      grid-row: 3;
+      min-height: 300px;
+      --tilt: -2deg;
+      margin-left: 10%;
+      width: 80%;
+    }
 
     .hud {
       /* Small brand bar that stays visible while scrolling. */
@@ -883,7 +963,7 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
 
-    .hud > * {
+    .hud>* {
       pointer-events: auto;
     }
 
@@ -1076,9 +1156,12 @@
     }
 
     @keyframes scrollNudge {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: translateY(0);
       }
+
       50% {
         transform: translateY(8px);
       }
@@ -1120,6 +1203,7 @@
     }
 
     @media (max-width: 1100px) {
+
       /* Tablet adjustments: collapse hero and room layout into one column sooner. */
       .intro-panel {
         grid-template-columns: 1fr;
@@ -1180,6 +1264,7 @@
     }
 
     @media (max-width: 760px) {
+
       /* Mobile adjustments: artwork cluster becomes a stacked column for readability. */
       body {
         overflow-y: auto;
@@ -1306,6 +1391,7 @@
     }
 
     @media (max-width: 720px) {
+
       .gallery-cluster,
       .deep-dive-card {
         grid-template-columns: 1fr;
@@ -1337,14 +1423,18 @@
     }
   </style>
 </head>
+
 <body>
   <!-- Opening hero section. This is the first thing visitors see before they scroll into the rooms. -->
   <section class="intro-screen" id="introScreen" aria-label="Welcome screen">
     <div class="intro-panel">
       <div class="intro-copy reveal-item" style="--reveal-delay: 0ms;">
         <p class="intro-kicker reveal-item reveal-item--soft" style="--reveal-delay: 60ms;">Golden Echoes</p>
-        <h1 class="intro-title reveal-item reveal-item--soft" style="--reveal-delay: 150ms;"><span>Art Beyond</span><span>the Gallery</span><em>Wall</em></h1>
-        <p class="intro-body reveal-item reveal-item--soft" style="--reveal-delay: 260ms;">A cinematic three-room exhibition built from Rijksmuseum works. Scroll from the opening hero into themed spaces, and open each painting into a museum-style deep dive.</p>
+        <h1 class="intro-title reveal-item reveal-item--soft" style="--reveal-delay: 150ms;"><span>Art
+            Beyond</span><span>the Gallery</span><em>Wall</em></h1>
+        <p class="intro-body reveal-item reveal-item--soft" style="--reveal-delay: 260ms;">A cinematic three-room
+          exhibition built from Rijksmuseum works. Scroll from the opening hero into themed spaces, and open each
+          painting into a museum-style deep dive.</p>
         <div class="intro-facts reveal-item reveal-item--soft" aria-hidden="true" style="--reveal-delay: 380ms;">
           <span>3 rooms</span>
           <span>12 works</span>
@@ -1353,11 +1443,14 @@
       </div>
       <div class="intro-visuals reveal-item reveal-item--scale" aria-hidden="true" style="--reveal-delay: 160ms;">
         <div class="intro-year reveal-item reveal-item--soft" style="--reveal-delay: 220ms;">2026</div>
-        <div class="intro-side-note reveal-item reveal-item--soft" style="--reveal-delay: 320ms;">Virtual museum • Rijksmuseum selection</div>
-        <figure class="intro-hero-frame intro-hero-frame--tall reveal-item reveal-item--scale" style="--reveal-delay: 260ms;">
+        <div class="intro-side-note reveal-item reveal-item--soft" style="--reveal-delay: 320ms;">Virtual museum •
+          Rijksmuseum selection</div>
+        <figure class="intro-hero-frame intro-hero-frame--tall reveal-item reveal-item--scale"
+          style="--reveal-delay: 260ms;">
           <img src="https://iiif.micr.io/QkOGy/39,43,4541,5040/^600,/0/default.webp" alt="">
         </figure>
-        <figure class="intro-hero-frame intro-hero-frame--small reveal-item reveal-item--scale" style="--reveal-delay: 420ms;">
+        <figure class="intro-hero-frame intro-hero-frame--small reveal-item reveal-item--scale"
+          style="--reveal-delay: 420ms;">
           <img src="https://iiif.micr.io/cWWQE/98,98,10691,7210/^600,/0/default.webp" alt="">
         </figure>
         <div class="intro-tag reveal-item reveal-item--soft" style="--reveal-delay: 520ms;">
@@ -1376,86 +1469,171 @@
     </header>
 
     <div class="viewport">
-      <!-- All three themed rooms live inside one scrollable page flow. -->
-      <main class="track" id="roomTrack">
-        <section class="room room-one" data-room="0" data-ghost="Interior stillness">
-          <div class="room-grid">
-            <div class="room-copy reveal-item reveal-item--soft" style="--reveal-delay: 0ms;">
-              <div class="eyebrow">Room 01</div>
-              <h1 class="room-title">Interior <em>Stillness</em></h1>
-              <p class="room-lead">Quiet gestures, private reading, and close observation make this room feel slowed down and intimate.</p>
-              <p class="room-body">The first room is organized as a calm sequence instead of a collage of competing text. The paintings sit in a cleaner wall arrangement so the experience feels closer to entering a curated chamber than scrolling past a homepage section.</p>
-              <div class="room-meta">
-                <span>4 works</span>
-                <span>Rijksmuseum</span>
-                <span>Click for deep dive</span>
-              </div>
-              <div class="room-actions">
-                <button class="ghost-button ghost-button--portal" type="button" data-jump-room="1">Move to Room 02</button>
-                <a class="ghost-button inline-flex items-center justify-center no-underline" href="https://www.rijksmuseum.nl/en/collection" target="_blank" rel="noreferrer">Open Collection</a>
-              </div>
-            </div>
+      <style>
+        .single-room-container {
+          padding: 4rem 2rem;
+          max-width: 900px;
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 4rem;
+        }
 
-            <div class="gallery-cluster" id="room-0-gallery"></div>
+        /* The physical room the user is currently "standing" in */
+        .room-stage {
+          position: relative;
+          width: 100%;
+          max-width: 500px;
+          aspect-ratio: 1 / 1;
+          border: 4px solid var(--bronze);
+          background: rgba(198, 160, 106, 0.05);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 0 50px rgba(198, 160, 106, 0.1);
+          transition: border-color 400ms ease, background 400ms ease;
+        }
+
+        .room-stage::after {
+          content: attr(data-label);
+          position: absolute;
+          font-family: "Bodoni Moda", serif;
+          color: rgba(239, 229, 211, 0.1);
+          font-size: clamp(3rem, 6vw, 5rem);
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          pointer-events: none;
+          text-align: center;
+        }
+
+        /* Navigation Doors */
+        .door {
+          position: absolute;
+          width: 80px;
+          height: 24px;
+          background: rgba(20, 10, 11, 0.95);
+          border: 1px solid var(--bronze);
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--parchment);
+          font-family: "Manrope", sans-serif;
+          font-size: 0.7rem;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          z-index: 5;
+          transition: all 300ms ease;
+        }
+
+        .door:hover {
+          background: var(--bronze);
+          color: #000;
+          box-shadow: 0 0 20px rgba(198, 160, 106, 0.5);
+        }
+
+        .door-prev {
+          left: -40px;
+          top: 50%;
+          transform: translateY(-50%) rotate(-90deg);
+        }
+
+        .door-next {
+          right: -40px;
+          top: 50%;
+          transform: translateY(-50%) rotate(90deg);
+        }
+
+        /* Artwork Nodes on the Walls */
+        .art-node {
+          position: absolute;
+          width: 24px;
+          height: 24px;
+          background: var(--parchment);
+          border: 3px solid var(--wine);
+          cursor: pointer;
+          transition: all 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+          z-index: 10;
+        }
+
+        .art-node:hover {
+          transform: scale(1.6);
+          background: var(--bronze);
+          border-color: #fff;
+          box-shadow: 0 0 20px rgba(198, 160, 106, 0.8);
+        }
+
+        /* Geometric Wall Placements (Avoid overlapping with doors at 50%) */
+        .wall-0 {
+          top: -14px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        /* North */
+        .wall-1 {
+          bottom: -14px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        /* South */
+        .wall-2 {
+          left: -14px;
+          top: 20%;
+          transform: translateY(-50%);
+        }
+
+        /* West (Top half) */
+        .wall-3 {
+          right: -14px;
+          top: 80%;
+          transform: translateY(-50%);
+        }
+
+        /* East (Bottom half) */
+
+        /* Text Dashboard */
+        .room-dashboard {
+          width: 100%;
+          border-top: 1px solid rgba(198, 160, 106, 0.3);
+          padding-top: 3rem;
+          display: grid;
+          grid-template-columns: 1fr 2fr;
+          gap: 4rem;
+        }
+
+        @media (max-width: 760px) {
+          .room-dashboard {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+        }
+      </style>
+
+      <main class="single-room-container" id="museum-floorplan">
+        <div class="room-stage" id="room-stage">
+        </div>
+
+        <div class="room-dashboard" id="room-dashboard">
+          <div>
+            <div class="eyebrow" id="dash-eyebrow">Room 01</div>
+            <h2 class="room-title" id="dash-title">Room <em>Name</em></h2>
           </div>
-        </section>
-
-        <section class="room room-two" data-room="1" data-ghost="Open horizon">
-          <div class="room-grid">
-            <div class="room-copy reveal-item reveal-item--soft" style="--reveal-delay: 0ms;">
-              <div class="eyebrow">Room 02</div>
-              <h2 class="room-title">Open <em>Horizon</em></h2>
-              <p class="room-lead">Brick streets, bleaching fields, storm clouds, and river wind push the gallery outward.</p>
-              <p class="room-body">The second room widens into landscape and outlook. The wall plan is more orderly here, so navigation feels intentional and the paintings read as a continuous 2D promenade through Dutch weather, streets, and distance.</p>
-              <div class="room-meta">
-                <span>4 works</span>
-                <span>Landscape room</span>
-                <span>Arrow keys enabled</span>
-              </div>
-              <div class="room-actions">
-                <button class="ghost-button ghost-button--portal" type="button" data-jump-room="0">Back to Room 01</button>
-                <button class="ghost-button ghost-button--portal" type="button" data-jump-room="2">Continue to Room 03</button>
-              </div>
+          <div>
+            <p class="room-lead" id="dash-lead"></p>
+            <p class="room-body" id="dash-body"></p>
+            <div class="room-meta">
+              <span>4 works</span>
+              <span>Click nodes on walls to view</span>
             </div>
-
-            <div class="gallery-cluster" id="room-1-gallery"></div>
           </div>
-        </section>
-
-        <section class="room room-three" data-room="2" data-ghost="Public theater">
-          <div class="room-grid">
-            <div class="room-copy reveal-item reveal-item--soft" style="--reveal-delay: 0ms;">
-              <div class="eyebrow">Room 03</div>
-              <h2 class="room-title">Public <em>Theater</em></h2>
-              <p class="room-lead">Guard companies, drapers, banquet tables, and family disorder turn public life into performance.</p>
-              <p class="room-body">The final room leans into spectacle and social performance. Heavier compositions and richer color close the gallery with a dramatic, public-facing atmosphere rather than another quiet display wall.</p>
-              <div class="room-meta">
-                <span>4 works</span>
-                <span>Dramatic room</span>
-                <span>Virtual finale</span>
-              </div>
-              <div class="room-actions">
-                <button class="ghost-button ghost-button--portal" type="button" data-jump-room="1">Return to Room 02</button>
-              </div>
-            </div>
-
-            <div class="gallery-cluster" id="room-2-gallery"></div>
-          </div>
-        </section>
+        </div>
       </main>
     </div>
-
   </div>
-  <!-- Scroll hint used after the hero to suggest that more content exists below. -->
-  <button class="scroll-cue" id="scrollCue" type="button" aria-label="Scroll to continue">
-    <span class="scroll-cue__text">
-      <strong>Scroll</strong>
-      <span>Continue through the gallery</span>
-    </span>
-    <span class="scroll-cue__arrow" aria-hidden="true">↓</span>
-  </button>
 
-  <!-- Artwork detail overlay. Populated dynamically when an artwork is selected. -->
   <section class="deep-dive" id="deepDive" aria-hidden="true">
     <div class="deep-dive-card" id="deepDiveCard">
       <button class="deep-dive-close" type="button" id="closeDive" aria-label="Close deep dive">✕</button>
@@ -1486,14 +1664,7 @@
   </section>
 
   <script>
-    // Overlay DOM references used when the user opens a specific artwork.
-    const diveImage = document.getElementById("diveImage");
-
-    // Parallax removed: it was overriding gallery transforms and making the layout feel unstable.
-
     const hud = document.querySelector(".hud");
-
-    // Keep the top brand bar more readable once the user scrolls away from the hero.
     window.addEventListener("scroll", () => {
       if (window.scrollY > 50) {
         hud.classList.add("scrolled");
@@ -1502,177 +1673,96 @@
       }
     });
 
-    // Core content model for the project.
-    // Each room owns 4 artworks so the assignment requirement stays easy to verify.
     const rooms = [
       {
-        code: "Room 01",
-        shortTheme: "Interior stillness",
-        title: "Interior Stillness",
-        accent: "#c6a06a",
-        glow: "#6b4a2d",
-        galleryClass: "room-one",
+        code: "Room 01", shortTheme: "Interior stillness", title: "Interior Stillness", accent: "#c6a06a",
+        lead: "Quiet gestures, private reading, and close observation make this room feel slowed down and intimate.",
+        body: "The first room is organized as a calm sequence instead of a collage of competing text. The paintings sit in a cleaner wall arrangement so the experience feels closer to entering a curated chamber.",
         artworks: [
-          {
-            slot: "art-a",
-            shortTitle: "The Milkmaid",
-            title: "The Milkmaid",
-            artist: "Johannes Vermeer",
-            date: "c. 1660",
-            description: "Vermeer makes a kitchen scene feel almost sacred. The pouring milk, rough bread, and daylight across the wall turn domestic labor into a sustained moment of stillness.",
-            image: "https://iiif.micr.io/QkOGy/39,43,4541,5040/^600,/0/default.webp",
-            link: "https://www.rijksmuseum.nl/en/collection/object/The-Milkmaid--42dd0e658c2979aec8e144d2357c55c0",
-            placement: "North alcove"
-          },
-          {
-            slot: "art-b",
-            shortTitle: "Woman Reading a Letter",
-            title: "Woman Reading a Letter",
-            artist: "Johannes Vermeer",
-            date: "c. 1663",
-            description: "A letter, a window, and a blue jacket are enough for Vermeer to create emotional suspense. The scene stays quiet while still feeling charged with anticipation.",
-            image: "https://iiif.micr.io/aehHx/45,64,5343,6402/^600,/0/default.webp",
-            link: "https://www.rijksmuseum.nl/en/collection/object/Woman-Reading-a-Letter--8e9e02c8045362ffb2171b2fb52953ba",
-            placement: "Reading niche"
-          },
-          {
-            slot: "art-c",
-            shortTitle: "The Love Letter",
-            title: "The Love Letter",
-            artist: "Johannes Vermeer",
-            date: "c. 1669 - c. 1670",
-            description: "The doorway framing makes the viewer feel like an intruder. Vermeer turns a simple delivery into a layered, theatrical encounter built on glances and silence.",
-            image: "https://iiif.micr.io/hqxQG/61,88,5142,5886/^600,/0/default.webp",
-            link: "https://www.rijksmuseum.nl/en/collection/object/De-liefdesbrief--508513eb7ee162ec2f68ea3d3138d912",
-            placement: "Inner chamber wall"
-          },
-          {
-            slot: "art-d",
-            shortTitle: "Flowers in a Glass Vase",
-            title: "Still Life with Flowers in a Glass Vase",
-            artist: "Rachel Ruysch",
-            date: "c. 1690 - c. 1720",
-            description: "Ruysch turns a bouquet into a study of attention and control. It broadens the room from domestic action toward careful looking while keeping the atmosphere restrained and quiet.",
-            image: "https://iiif.micr.io/sbaXO/111,0,5330,6589/^600,/0/default.webp",
-            link: "https://www.rijksmuseum.nl/en/collection/object/Still-Life-with-Flowers-in-a-Glass-Vase--210e3fc99bb8b3a875fcd7b57fce1a83",
-            placement: "Stillness wall"
-          }
+          { title: "The Milkmaid", artist: "Johannes Vermeer", date: "c. 1660", description: "Vermeer makes a kitchen scene feel almost sacred. The pouring milk, rough bread, and daylight across the wall turn domestic labor into a sustained moment of stillness.", image: "https://iiif.micr.io/QkOGy/39,43,4541,5040/^600,/0/default.webp", link: "https://www.rijksmuseum.nl/en/collection/object/The-Milkmaid--42dd0e658c2979aec8e144d2357c55c0", placement: "North Wall" },
+          { title: "Woman Reading a Letter", artist: "Johannes Vermeer", date: "c. 1663", description: "A letter, a window, and a blue jacket are enough for Vermeer to create emotional suspense. The scene stays quiet while still feeling charged with anticipation.", image: "https://iiif.micr.io/aehHx/45,64,5343,6402/^600,/0/default.webp", link: "https://www.rijksmuseum.nl/en/collection/object/Woman-Reading-a-Letter--8e9e02c8045362ffb2171b2fb52953ba", placement: "South Wall" },
+          { title: "The Love Letter", artist: "Johannes Vermeer", date: "c. 1669 - c. 1670", description: "The doorway framing makes the viewer feel like an intruder. Vermeer turns a simple delivery into a layered, theatrical encounter built on glances and silence.", image: "https://iiif.micr.io/hqxQG/61,88,5142,5886/^600,/0/default.webp", link: "https://www.rijksmuseum.nl/en/collection/object/De-liefdesbrief--508513eb7ee162ec2f68ea3d3138d912", placement: "West Wall" },
+          { title: "Still Life with Flowers", artist: "Rachel Ruysch", date: "c. 1690 - c. 1720", description: "Ruysch turns a bouquet into a study of attention and control. It broadens the room from domestic action toward careful looking while keeping the atmosphere restrained and quiet.", image: "https://iiif.micr.io/sbaXO/111,0,5330,6589/^600,/0/default.webp", link: "https://www.rijksmuseum.nl/en/collection/object/Still-Life-with-Flowers-in-a-Glass-Vase--210e3fc99bb8b3a875fcd7b57fce1a83", placement: "East Wall" }
         ]
       },
       {
-        code: "Room 02",
-        shortTheme: "Open horizon",
-        title: "Open Horizon",
-        accent: "#8f9b74",
-        glow: "#4a5340",
-        galleryClass: "room-two",
+        code: "Room 02", shortTheme: "Open horizon", title: "Open Horizon", accent: "#8f9b74",
+        lead: "Brick streets, bleaching fields, storm clouds, and river wind push the gallery outward.",
+        body: "The second room widens into landscape and outlook. The wall plan is more orderly here, so navigation feels intentional and the paintings read as a continuous 2D promenade through Dutch weather.",
         artworks: [
-          {
-            slot: "art-a",
-            shortTitle: "The Little Street",
-            title: "View of Houses in Delft, Known as 'The Little Street'",
-            artist: "Johannes Vermeer",
-            date: "c. 1658",
-            description: "Brick walls, an alley, and tiny figures become a portrait of place. Vermeer grants the ordinary architecture of Delft the same seriousness he gives his interiors.",
-            image: "https://iiif.micr.io/VWEov/0,2842.5,4272,2403/1920,1080/0/default.webp",
-            link: "https://www.rijksmuseum.nl/en/collection/object/View-of-Houses-in-Delft-Known-as-The-Little-Street--a7dbf937cbd6f7c30f66f8aca4a0207c",
-            placement: "Street-facing wall"
-          },
-          {
-            slot: "art-b",
-            shortTitle: "The Windmill",
-            title: "The Windmill at Wijk bij Duurstede",
-            artist: "Jacob Isaacksz van Ruisdael",
-            date: "c. 1668 - c. 1670",
-            description: "The mill and sky form a Dutch icon without becoming static. Ruisdael lets weather do as much of the work as architecture.",
-            image: "https://iiif.micr.io/XWEFp/0,892.8125,6806,3828.375/1920,1080/0/default.webp",
-            link: "https://www.rijksmuseum.nl/en/collection/object/De-molen-bij-Wijk-bij-Duurstede--fb2b57919550092bf709472f81426eab",
-            placement: "Central vista"
-          },
-          {
-            slot: "art-c",
-            shortTitle: "View of Haarlem",
-            title: "View of Haarlem from the Northwest, with the Bleaching Fields in the Foreground",
-            artist: "Jacob Isaacksz van Ruisdael",
-            date: "c. 1650 - c. 1682",
-            description: "The low horizon creates room for enormous weather. The bleaching fields below remind you that even this open sky is tied to labor and urban life.",
-            image: "https://iiif.micr.io/dNkMA/0,2199.625,4268,2400.75/1920,1080/0/default.webp",
-            link: "https://www.rijksmuseum.nl/en/collection/object/View-of-Haarlem-from-the-Northwest-with-the-Bleaching-Fields-in-the-Foreground--b592b67f86e35e47e704cde12e96a637",
-            placement: "South window wall"
-          },
-          {
-            slot: "art-d",
-            shortTitle: "Landscape",
-            title: "Landscape",
-            artist: "Claude de Jongh",
-            date: "1633",
-            description: "A river, a road, and an Italianate tower hold the scene together without overdramatizing it. The painting adds distance and travel to the room's sense of outward movement.",
-            image: "https://iiif.micr.io/asUYv/full/^600,/0/default.webp",
-            link: "https://www.rijksmuseum.nl/en/collection/object/Landscape--bf40ad3a541321abff87749abaf491d1",
-            placement: "Far-view wall"
-          }
+          { title: "The Little Street", artist: "Johannes Vermeer", date: "c. 1658", description: "Brick walls, an alley, and tiny figures become a portrait of place.", image: "https://iiif.micr.io/VWEov/0,2842.5,4272,2403/1920,1080/0/default.webp", link: "https://www.rijksmuseum.nl/en/collection/object/View-of-Houses-in-Delft-Known-as-The-Little-Street--a7dbf937cbd6f7c30f66f8aca4a0207c", placement: "North Wall" },
+          { title: "The Windmill", artist: "Jacob Isaacksz van Ruisdael", date: "c. 1668 - c. 1670", description: "The mill and sky form a Dutch icon without becoming static. Ruisdael lets weather do as much of the work as architecture.", image: "https://iiif.micr.io/XWEFp/0,892.8125,6806,3828.375/1920,1080/0/default.webp", link: "https://www.rijksmuseum.nl/en/collection/object/De-molen-bij-Wijk-bij-Duurstede--fb2b57919550092bf709472f81426eab", placement: "South Wall" },
+          { title: "View of Haarlem", artist: "Jacob Isaacksz van Ruisdael", date: "c. 1650 - c. 1682", description: "The low horizon creates room for enormous weather.", image: "https://iiif.micr.io/dNkMA/0,2199.625,4268,2400.75/1920,1080/0/default.webp", link: "https://www.rijksmuseum.nl/en/collection/object/View-of-Haarlem-from-the-Northwest-with-the-Bleaching-Fields-in-the-Foreground--b592b67f86e35e47e704cde12e96a637", placement: "West Wall" },
+          { title: "Landscape", artist: "Claude de Jongh", date: "1633", description: "A river, a road, and an Italianate tower hold the scene together without overdramatizing it.", image: "https://iiif.micr.io/asUYv/full/^600,/0/default.webp", link: "https://www.rijksmuseum.nl/en/collection/object/Landscape--bf40ad3a541321abff87749abaf491d1", placement: "East Wall" }
         ]
       },
       {
-        code: "Room 03",
-        shortTheme: "Public theater",
-        title: "Public Theater",
-        accent: "#b9787b",
-        glow: "#5e2320",
-        galleryClass: "room-three",
+        code: "Room 03", shortTheme: "Public theater", title: "Public Theater", accent: "#b9787b",
+        lead: "Guard companies, drapers, banquet tables, and family disorder turn public life into performance.",
+        body: "The final room leans into spectacle and social performance. Heavier compositions and richer color close the gallery with a dramatic, public-facing atmosphere.",
         artworks: [
-          {
-            slot: "art-a",
-            shortTitle: "The Night Watch",
-            title: "The Night Watch Militia Company of District II under the Command of Captain Frans Banninck Cocq",
-            artist: "Rembrandt van Rijn",
-            date: "1642",
-            description: "Rembrandt explodes the format of the civic portrait. Light, gesture, and movement turn an official commission into a stage full of interruption and drama.",
-            image: "https://iiif.micr.io/PJEZO/73,73,14459,11936/^600,/0/default.webp",
-            link: "https://www.rijksmuseum.nl/en/collection/object/The-Night-Watch-Militia-Company-of-District-II-under-the-Command-of-Captain-Frans-Banninck-Cocq--3137deb45cd7765f9a76084a16c99544",
-            placement: "Grand hall wall"
-          },
-          {
-            slot: "art-b",
-            shortTitle: "The Syndics",
-            title: "The Sampling Officials of the Amsterdam Drapers' Guild, Known as 'The Syndics'",
-            artist: "Rembrandt van Rijn",
-            date: "1662",
-            description: "The men seem to have looked up just as the viewer arrived. That split-second acknowledgment gives the painting its unusual sense of live presence.",
-            image: "https://iiif.micr.io/cWWQE/98,98,10691,7210/^600,/0/default.webp",
-            link: "https://www.rijksmuseum.nl/en/collection/object/The-Sampling-Officials-of-the-Amsterdam-Drapers-Guild-known-as-The-Syndics--575b43f479d021359fb5f63b32f7c234",
-            placement: "Council wall"
-          },
-          {
-            slot: "art-c",
-            shortTitle: "Banquet Still Life",
-            title: "Banquet Still Life",
-            artist: "Adriaen van Utrecht",
-            date: "1644",
-            description: "Lobster, fruit, silverware, glass, and shell all compete at once. The work stages abundance as a performance of display and appetite.",
-            image: "https://iiif.micr.io/Rmnkt/387,387,5337,4009/^600,/0/default.webp",
-            link: "https://www.rijksmuseum.nl/en/collection/object/Pronkstilleven--a506f0ebc0fcdfce64dbbd24ff9cc864",
-            placement: "Feast alcove"
-          },
-          {
-            slot: "art-d",
-            shortTitle: "The Merry Family",
-            title: "The Merry Family",
-            artist: "Jan Havicksz. Steen",
-            date: "1668",
-            description: "Steen makes pleasure noisy, comic, and cautionary at once. It closes the gallery with a social room full of music, appetite, and imitation.",
-            image: "https://iiif.micr.io/SbsFC/69,94,5749,4411/^600,/0/default.webp",
-            link: "https://www.rijksmuseum.nl/en/collection/object/The-Merry-Family--f6c4f4db1681a8704b372bda0183623b",
-            placement: "Final salon"
-          }
+          { title: "The Night Watch", artist: "Rembrandt van Rijn", date: "1642", description: "Rembrandt explodes the format of the civic portrait.", image: "https://iiif.micr.io/PJEZO/73,73,14459,11936/^600,/0/default.webp", link: "https://www.rijksmuseum.nl/en/collection/object/The-Night-Watch-Militia-Company-of-District-II-under-the-Command-of-Captain-Frans-Banninck-Cocq--3137deb45cd7765f9a76084a16c99544", placement: "North Wall" },
+          { title: "The Syndics", artist: "Rembrandt van Rijn", date: "1662", description: "The men seem to have looked up just as the viewer arrived.", image: "https://iiif.micr.io/cWWQE/98,98,10691,7210/^600,/0/default.webp", link: "https://www.rijksmuseum.nl/en/collection/object/The-Sampling-Officials-of-the-Amsterdam-Drapers-Guild-known-as-The-Syndics--575b43f479d021359fb5f63b32f7c234", placement: "South Wall" },
+          { title: "Banquet Still Life", artist: "Adriaen van Utrecht", date: "1644", description: "Lobster, fruit, silverware, glass, and shell all compete at once.", image: "https://iiif.micr.io/Rmnkt/387,387,5337,4009/^600,/0/default.webp", link: "https://www.rijksmuseum.nl/en/collection/object/Pronkstilleven--a506f0ebc0fcdfce64dbbd24ff9cc864", placement: "West Wall" },
+          { title: "The Merry Family", artist: "Jan Havicksz. Steen", date: "1668", description: "Steen makes pleasure noisy, comic, and cautionary at once.", image: "https://iiif.micr.io/SbsFC/69,94,5749,4411/^600,/0/default.webp", link: "https://www.rijksmuseum.nl/en/collection/object/The-Merry-Family--f6c4f4db1681a8704b372bda0183623b", placement: "East Wall" }
         ]
       }
     ];
 
-    // Global UI references for room navigation and the deep-dive overlay.
-    const track = document.getElementById("roomTrack");
+    // Single Room State Machine
+    let currentRoomIndex = 0;
+    const stage = document.getElementById("room-stage");
+
+    function loadRoom(index) {
+      currentRoomIndex = index;
+      const room = rooms[index];
+
+      // Clear the stage completely
+      stage.innerHTML = "";
+
+      // Update the styling for the new room
+      stage.dataset.label = room.code;
+      stage.style.borderColor = room.accent;
+
+      // Add 'Previous' Door if not in the first room
+      if (index > 0) {
+        const prevDoor = document.createElement("div");
+        prevDoor.className = "door door-prev";
+        prevDoor.innerText = "◄ Exit";
+        prevDoor.onclick = () => loadRoom(index - 1);
+        stage.appendChild(prevDoor);
+      }
+
+      // Add 'Next' Door if not in the last room
+      if (index < rooms.length - 1) {
+        const nextDoor = document.createElement("div");
+        nextDoor.className = "door door-next";
+        nextDoor.innerText = "Next ►";
+        nextDoor.onclick = () => loadRoom(index + 1);
+        stage.appendChild(nextDoor);
+      }
+
+      // Render the artworks on the walls
+      room.artworks.forEach((art, artIndex) => {
+        const node = document.createElement("div");
+        node.className = `art-node wall-${artIndex}`;
+        node.title = art.title;
+        node.onclick = () => openDeepDive(index, artIndex);
+        stage.appendChild(node);
+      });
+
+      // Update the dashboard below the room
+      document.getElementById("dash-eyebrow").innerText = room.code;
+      document.getElementById("dash-title").innerHTML = `${room.title.split(' ')[0]} <em>${room.title.split(' ')[1] || ''}</em>`;
+      document.getElementById("dash-title").style.color = room.accent;
+      document.getElementById("dash-lead").innerText = room.lead;
+      document.getElementById("dash-body").innerText = room.body;
+    }
+
+    // Modal UI Logic
     const deepDive = document.getElementById("deepDive");
     const deepDiveCard = document.getElementById("deepDiveCard");
+    const diveImage = document.getElementById("diveImage");
     const diveTitle = document.getElementById("diveTitle");
     const diveMeta = document.getElementById("diveMeta");
     const diveDescription = document.getElementById("diveDescription");
@@ -1681,110 +1771,10 @@
     const diveLink = document.getElementById("diveLink");
     const diveRoomLabel = document.getElementById("diveRoomLabel");
     const closeDiveButton = document.getElementById("closeDive");
-    const introScreen = document.getElementById("introScreen");
-    const scrollCue = document.getElementById("scrollCue");
-    const roomPanels = Array.from(document.querySelectorAll(".room"));
 
-    let activeRoom = 0;
-    let activeCard = null;
-    let openArtwork = null;
-    let lastFocusedCard = null;
-
-    // Show the scroll hint near the top of the experience, then hide it once
-    // the user has clearly moved into the gallery.
-    function updateScrollCue() {
-      if (!scrollCue) {
-        return;
-      }
-
-      const introHeight = introScreen ? introScreen.offsetHeight : window.innerHeight;
-      const shouldShow = !deepDive.classList.contains("is-open")
-        && window.scrollY < Math.max(220, introHeight - 140);
-
-      scrollCue.classList.toggle("is-visible", shouldShow);
-    }
-
-    // Build all artwork cards from the data above so HTML stays manageable.
-    function buildRooms() {
-      rooms.forEach((room, roomIndex) => {
-        const gallery = document.getElementById(`room-${roomIndex}-gallery`);
-        if (!gallery) return;
-
-        // Push each room's accent colors into CSS custom properties for styling.
-        if (gallery.parentElement && gallery.parentElement.parentElement) {
-          gallery.parentElement.parentElement.style.setProperty("--room-accent", room.accent);
-          gallery.parentElement.parentElement.style.setProperty("--room-glow", room.glow);
-        }
-
-        room.artworks.forEach((artwork, artworkIndex) => {
-          // Each artwork is rendered as a button because clicking opens the deep-dive panel.
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className = `art-card reveal-item reveal-item--scale ${artwork.slot}`;
-          button.dataset.roomIndex = roomIndex;
-          button.dataset.artIndex = artworkIndex;
-          button.style.setProperty("--reveal-delay", `${140 + artworkIndex * 110}ms`);
-          button.innerHTML = `
-            <div class="frame">
-              <img src="${artwork.image}" alt="${artwork.title}">
-              <div class="index">${String(artworkIndex + 1).padStart(2, "0")}</div>
-              <div class="label">
-                <strong>${artwork.shortTitle}</strong>
-                <span>${artwork.artist}</span>
-              </div>
-            </div>
-          `;
-
-          button.addEventListener("click", () => openDeepDive(roomIndex, artworkIndex, button));
-          gallery.appendChild(button);
-        });
-      });
-    }
-
-    // Scroll the page to a target room index while keeping the active room state updated.
-    function scrollToRoom(index, behavior = "smooth") {
-      const nextIndex = (index + rooms.length) % rooms.length;
-      const targetRoom = roomPanels[nextIndex];
-      if (targetRoom) {
-        targetRoom.scrollIntoView({ behavior, block: "start" });
-      }
-      activeRoom = nextIndex;
-      updateMap();
-    }
-
-    // Track which room is currently closest to the viewport focus point.
-    function updateMap() {
-      roomPanels.forEach((panel, index) => {
-        panel.classList.toggle("is-active", index === activeRoom);
-      });
-      document.documentElement.style.setProperty("--room-index", activeRoom);
-    }
-
-    function setRoom(index) {
-      activeRoom = (index + rooms.length) % rooms.length;
-      updateMap();
-    }
-
-    function stepRoom(delta) {
-      scrollToRoom(activeRoom + delta);
-    }
-
-    // Visually mark the last artwork that opened the overlay.
-    function markActiveCard(sourceCard) {
-      if (activeCard) {
-        activeCard.classList.remove("is-active");
-      }
-      activeCard = sourceCard;
-      if (activeCard) {
-        activeCard.classList.add("is-active");
-      }
-    }
-
-    // Copy the selected artwork data into the overlay panel.
-    function populateDeepDive(roomIndex, artworkIndex) {
+    function openDeepDive(roomIndex, artworkIndex) {
       const room = rooms[roomIndex];
       const artwork = room.artworks[artworkIndex];
-      openArtwork = { roomIndex, artworkIndex };
 
       deepDiveCard.style.setProperty("--active-accent", room.accent);
       diveRoomLabel.textContent = `${room.code} • ${room.title}`;
@@ -1796,219 +1786,31 @@
       diveLink.href = artwork.link;
       diveImage.src = artwork.image;
       diveImage.alt = artwork.title;
-    }
 
-    // Web Animations API entrance for the deep-dive modal.
-    function animateDiveOpen(sourceCard) {
       deepDive.classList.add("is-open");
       deepDive.setAttribute("aria-hidden", "false");
-
-      const overlayAnimation = deepDive.animate(
-        [
-          { opacity: 0 },
-          { opacity: 1 }
-        ],
-        {
-          duration: 320,
-          easing: "ease-out",
-          fill: "forwards"
-        }
-      );
-
-      const cardAnimation = deepDiveCard.animate(
-        [
-          { opacity: 0, transform: "translateY(28px) scale(0.975)" },
-          { opacity: 1, transform: "translateY(0) scale(1)" }
-        ],
-        {
-          duration: 420,
-          easing: "cubic-bezier(0.2, 0.9, 0.22, 1)",
-          fill: "forwards"
-        }
-      );
-
-      const image = deepDiveCard.querySelector(".deep-dive-figure");
-      image.animate(
-        [
-          { opacity: 0.4, transform: "scale(1.06)" },
-          { opacity: 1, transform: "scale(1)" }
-        ],
-        {
-          duration: 520,
-          easing: "ease-out",
-          fill: "forwards"
-        }
-      );
-
-      if (sourceCard) {
-        sourceCard.animate(
-          [
-            { transform: "translateY(0) scale(1)" },
-            { transform: "translateY(-8px) scale(1.02)" },
-            { transform: "translateY(0) scale(1)" }
-          ],
-          {
-            duration: 480,
-            easing: "ease-out"
-          }
-        );
-      }
-
-      return Promise.all([overlayAnimation.finished, cardAnimation.finished]).catch(() => {});
+      deepDive.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 320, easing: "ease-out", fill: "forwards" });
+      deepDiveCard.animate([{ opacity: 0, transform: "translateY(28px) scale(0.975)" }, { opacity: 1, transform: "translateY(0) scale(1)" }], { duration: 420, easing: "cubic-bezier(0.2, 0.9, 0.22, 1)", fill: "forwards" });
     }
 
-    // Matching close animation for the modal.
-    function animateDiveClose() {
-      const overlayAnimation = deepDive.animate(
-        [
-          { opacity: 1 },
-          { opacity: 0 }
-        ],
-        {
-          duration: 240,
-          easing: "ease-in",
-          fill: "forwards"
-        }
-      );
-
-      const cardAnimation = deepDiveCard.animate(
-        [
-          { opacity: 1, transform: "translateY(0) scale(1)" },
-          { opacity: 0, transform: "translateY(18px) scale(0.985)" }
-        ],
-        {
-          duration: 240,
-          easing: "ease-in",
-          fill: "forwards"
-        }
-      );
-
-      return Promise.all([overlayAnimation.finished, cardAnimation.finished]).catch(() => {});
+    function closeDeepDive() {
+      if (!deepDive.classList.contains("is-open")) return;
+      deepDive.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 240, easing: "ease-in", fill: "forwards" });
+      deepDiveCard.animate([{ opacity: 1, transform: "translateY(0) scale(1)" }, { opacity: 0, transform: "translateY(18px) scale(0.985)" }], { duration: 240, easing: "ease-in", fill: "forwards" });
+      setTimeout(() => {
+        deepDive.classList.remove("is-open");
+        deepDive.setAttribute("aria-hidden", "true");
+      }, 250);
     }
 
-    // Main entry point for opening an artwork from any room.
-    async function openDeepDive(roomIndex, artworkIndex, sourceCard) {
-      scrollToRoom(roomIndex);
-      populateDeepDive(roomIndex, artworkIndex);
-      markActiveCard(sourceCard);
-      lastFocusedCard = sourceCard || null;
-      await animateDiveOpen(sourceCard);
-      updateScrollCue();
-    }
+    closeDiveButton.addEventListener("click", closeDeepDive);
+    deepDive.addEventListener("click", (e) => { if (e.target === deepDive) closeDeepDive(); });
+    document.addEventListener("keydown", (e) => { if (deepDive.classList.contains("is-open") && e.key === "Escape") closeDeepDive(); });
 
-    // Close the artwork overlay and restore keyboard focus to the last clicked card.
-    async function closeDeepDive() {
-      if (!deepDive.classList.contains("is-open")) {
-        return;
-      }
-      await animateDiveClose();
-      deepDive.classList.remove("is-open");
-      deepDive.setAttribute("aria-hidden", "true");
-      if (lastFocusedCard) {
-        lastFocusedCard.focus();
-      }
-      updateScrollCue();
-    }
+    // Initialize the engine by loading Room 01
+    loadRoom(0);
 
-    // Register all non-generated interactions: room jumps, overlay close, keyboard nav, scroll cue.
-    function bindControls() {
-      document.querySelectorAll("[data-jump-room]").forEach((button) => {
-        button.addEventListener("click", () => {
-          scrollToRoom(Number(button.dataset.jumpRoom));
-        });
-      });
-
-      closeDiveButton.addEventListener("click", closeDeepDive);
-      deepDive.addEventListener("click", (event) => {
-        if (event.target === deepDive) {
-          closeDeepDive();
-        }
-      });
-
-      if (scrollCue) {
-        scrollCue.addEventListener("click", () => {
-          const firstArtwork = document.querySelector("#room-0-gallery .art-card");
-          if (firstArtwork) {
-            firstArtwork.scrollIntoView({ behavior: "smooth", block: "center" });
-          } else if (roomPanels[0]) {
-            roomPanels[0].scrollIntoView({ behavior: "smooth", block: "start" });
-          }
-        });
-      }
-
-      document.addEventListener("keydown", (event) => {
-        // Escape closes the overlay. Arrow keys move between rooms.
-        if (deepDive.classList.contains("is-open") && event.key === "Escape") {
-          closeDeepDive();
-          return;
-        }
-
-        if (["ArrowLeft", "ArrowRight"].includes(event.key)) {
-          event.preventDefault();
-        }
-
-        if (event.key === "ArrowLeft") {
-          stepRoom(-1);
-        }
-
-        if (event.key === "ArrowRight") {
-          stepRoom(1);
-        }
-      });
-
-      // Wheel event no longer needed for room navigation - uses natural scrolling
-      // Update the active room as the user naturally scrolls through the page.
-      window.addEventListener(
-        "scroll",
-        () => {
-          let closestIndex = 0;
-          let closestDistance = Infinity;
-
-          roomPanels.forEach((panel, index) => {
-            const rect = panel.getBoundingClientRect();
-            const distance = Math.abs(rect.top - window.innerHeight / 3);
-            if (distance < closestDistance) {
-              closestDistance = distance;
-              closestIndex = index;
-            }
-          });
-
-          if (closestIndex !== activeRoom) {
-            activeRoom = closestIndex;
-            updateMap();
-          }
-
-          updateScrollCue();
-        }
-      );
-    }
-
-    // Initial page bootstrapping.
-    buildRooms();
-    bindControls();
-    updateMap();
-    updateScrollCue();
-
-    // Reveal items progressively as the user scrolls down the page.
-    const observerOptions = {
-      threshold: 0.18,
-      rootMargin: '0px 0px -10% 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Each reveal item animates only once to avoid flicker while scrolling back upward.
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-
-    // Attach reveal animations to any element that opted into the shared reveal system.
-    document.querySelectorAll('.reveal-item').forEach(item => {
-      observer.observe(item);
-    });
   </script>
 </body>
+
 </html>
