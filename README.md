@@ -48,31 +48,17 @@ You only need:
 
 ## How To Run Locally
 
-Because the page loads external museum images, it is better to serve the project over a local HTTP server instead of opening the file directly.
+Because the page loads external museum images, it works better through a small local server than by opening the file directly.
 
-### Option 1: Python server
+Any simple local server is fine.
 
-From the project folder:
+One easy option is VS Code `Live Server`:
 
-```bash
-cd /Users/kingsleykotey/Desktop/CSC535-Project
-python3 -m http.server 8000
-```
+1. Open the folder in VS Code.
+2. Open `index.html` with `Live Server`.
+3. The page should open in the browser automatically.
 
-Then open:
-
-```text
-http://127.0.0.1:8000/
-```
-
-### Option 2: VS Code Live Server
-
-If you use VS Code:
-
-1. Open the folder.
-2. Install the `Live Server` extension if needed.
-3. Right-click `index.html`.
-4. Click `Open with Live Server`.
+If someone prefers another local server, that works too. The main idea is just to open the project through `localhost` rather than double-clicking the file.
 
 ## How The App Works
 
@@ -145,42 +131,42 @@ The shared CSS class for that system is:
 
 ## Suggested Team Workflow
 
-To avoid stepping on each other’s work, each teammate should choose a clear section.
+One easy way to keep the work organized is to let each person loosely own a section.
 
-Recommended split:
+Possible split:
 
 - Person 1: hero section and overall visual polish
 - Person 2: room text, room sequencing, and navigation buttons
 - Person 3: artwork data, descriptions, museum links, and fact-checking
 - Person 4: QA, responsiveness, deployment, and final cleanup
 
-If your team only has 3 people, combine the last two responsibilities.
+If the team has 3 people instead of 4, the last two parts can just be combined.
 
-## Safe Editing Guide
+## Editing Guide
 
 ### If you are editing the hero
 
-Work mainly in:
+The main places to look are:
 
 - hero HTML near the top of `body`
 - `.intro-*` CSS rules
 
 ### If you are editing room copy or layout
 
-Work mainly in:
+The main places to look are:
 
 - the room section markup inside `<main class="track" id="roomTrack">`
 - `.room-*`, `.gallery-cluster`, and `.art-card` CSS
 
 ### If you are editing artworks
 
-Work mainly in:
+The main place to look is:
 
 - the `rooms` JavaScript array
 
 ### If you are editing interaction logic
 
-Work mainly in:
+The main places to look are:
 
 - `buildRooms()`
 - `scrollToRoom()`
@@ -191,14 +177,14 @@ Work mainly in:
 ## Important Notes For Teammates
 
 - The assignment asks for all team-written code in a single `index.html` file.
-- Do not move the project into multiple CSS or JS files unless the team is intentionally making a separate non-submission version.
+- It is probably best to keep everything in `index.html` unless the team is making a separate practice version.
 - If you change the artwork list, keep the total at 12 minimum.
 - If you replace any artwork, make sure the Rijksmuseum link still works.
 - If you change the room structure, keep it obvious that each section is a room with a theme.
 
 ## How To Test Before Pushing
 
-Before pushing changes, check:
+A quick check before pushing:
 
 1. The page opens at `http://127.0.0.1:8000/`.
 2. The hero appears first.
@@ -216,7 +202,7 @@ The final deployment target mentioned in the assignment is:
 https://prd-stuweb02.southernct.edu/~[username]
 ```
 
-Typical deployment approach:
+A simple deployment flow would be:
 
 1. Log into the student server with SFTP.
 2. Open the `public_html` folder.
@@ -224,7 +210,7 @@ Typical deployment approach:
 4. If the team later uses any separate assets, upload them there too.
 5. Visit the public URL and verify that the page loads.
 
-For the assignment submission, the team should make sure the final public version matches the current `index.html`.
+Before submission, it is worth checking that the public version still matches the current `index.html`.
 
 ## Git Basics For Teammates
 
@@ -259,6 +245,8 @@ Push your branch:
 ```bash
 git push origin your-name-section
 ```
+
+If the team prefers, everyone can also work from `main`, but separate branches usually make merges a little easier.
 
 ## Suggested Team Message
 
