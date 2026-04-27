@@ -2003,6 +2003,24 @@
     let visitorStopByRoom = rooms.map(() => 0);
     let openArtwork = null;
     let lastFocusedCard = null;
+    const focusableSelector = 'a[href], button, input, select, textarea, [tabindex]';
+
+    function setInteractiveState(container, isActive) {
+      if (!container) {
+        return;
+      }
+
+      container.setAttribute("aria-hidden", String(!isActive));
+      container.toggleAttribute("inert", !isActive);
+
+      container.querySelectorAll(focusableSelector).forEach((element) => {
+        if (isActive) {
+          element.removeAttribute("tabindex");
+        } else {
+          element.setAttribute("tabindex", "-1");
+        }
+      });
+    }
 
     function getRoomFloor(roomIndex) {
       return document.querySelector(`#room-${roomIndex}-gallery .room-floor`);
@@ -2211,7 +2229,7 @@
       roomPanels.forEach((panel, index) => {
         const isActive = index === activeRoom;
         panel.classList.toggle("is-active", isActive);
-        panel.setAttribute("aria-hidden", String(!isActive));
+        setInteractiveState(panel, isActive);
       });
 
       roomPills.forEach((pill) => {
@@ -2272,7 +2290,7 @@
     // Web Animations API entrance for the deep-dive modal.
     function animateDiveOpen(sourceCard) {
       deepDive.classList.add("is-open");
-      deepDive.setAttribute("aria-hidden", "false");
+      setInteractiveState(deepDive, true);
 
       const overlayAnimation = deepDive.animate(
         [
@@ -2374,7 +2392,7 @@
       }
       await animateDiveClose();
       deepDive.classList.remove("is-open");
-      deepDive.setAttribute("aria-hidden", "true");
+      setInteractiveState(deepDive, false);
       if (lastFocusedCard) {
         lastFocusedCard.focus();
       }
@@ -2446,6 +2464,7 @@
     // Initial page bootstrapping.
     buildRooms();
     bindControls();
+    setInteractiveState(deepDive, false);
     updateMap();
     rooms.forEach((room, roomIndex) => {
       if (room.routeStops?.[0]) {
