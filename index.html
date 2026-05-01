@@ -89,7 +89,8 @@
     .shell {
       /* Main site wrapper for everything after the hero section. */
       position: relative;
-      min-height: 100%;
+      min-height: 100vh;
+      padding: 6.8rem 2rem 2rem;
       isolation: isolate;
     }
 
@@ -98,10 +99,12 @@
     }
 
     .viewport {
-      /* Viewport wrapper stays simple because the current navigation is scroll-based. */
+      /* Viewport wrapper now holds one active room at a time. */
       position: relative;
-      overflow: visible;
-      min-height: 100vh;
+      min-height: calc(100vh - 8.8rem);
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
     }
 
     /* Intro hero:
@@ -226,6 +229,14 @@
       font-size: 1.3rem;
       line-height: 1.68;
       font-weight: 500;
+    }
+
+    .intro-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 1.9rem;
+      align-items: center;
     }
 
     .intro-visuals {
@@ -376,104 +387,103 @@
     }
 
     .track {
-      /* All rooms live in a single vertical flow inside this track. */
-      display: grid;
-      width: 100%;
-      transform: none;
-      transition: none;
-      will-change: auto;
+      /* The room stage keeps every room in one shared footprint. */
+      position: relative;
+      width: min(1500px, 100%);
+      min-height: calc(100vh - 8.8rem);
     }
 
-    /* Each room is a themed section with its own accent color and ghost heading. */
     .room {
-      position: relative;
-      width: 100%;
-      min-height: auto;
-      padding: 9rem 4.2rem 6rem 2.75rem;
-      overflow: visible;
-      opacity: 1;
-      filter: saturate(1);
-      transition: opacity 480ms ease, filter 480ms ease;
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(24px) scale(0.985);
+      transition:
+        opacity 360ms ease,
+        transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .room.is-active {
       opacity: 1;
-      filter: saturate(1);
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
     }
 
     .room::before {
-      /* Soft room-specific glow behind each section. */
+      /* Soft room-specific glow behind the active floor plan. */
       content: "";
       position: absolute;
-      inset: 10vh auto auto 4%;
-      width: 55vw;
-      height: 55vw;
+      inset: 6% auto auto 10%;
+      width: min(58vw, 48rem);
+      height: min(58vw, 48rem);
       border-radius: 50%;
-      background: radial-gradient(circle, color-mix(in srgb, var(--room-glow) 32%, transparent) 0%, transparent 70%);
-      opacity: 0.42;
-      filter: blur(18px);
+      background: radial-gradient(circle, color-mix(in srgb, var(--room-glow) 34%, transparent) 0%, transparent 72%);
+      opacity: 0.48;
+      filter: blur(24px);
       pointer-events: none;
       z-index: 0;
     }
 
     .room::after {
-      /* Huge decorative room label in the background. */
+      /* Large ghost title that reinforces room identity without becoming content. */
       content: attr(data-ghost);
       position: absolute;
-      right: 3.5rem;
-      top: 18vh;
+      right: 2rem;
+      bottom: 2rem;
       font-family: "Bodoni Moda", serif;
-      font-size: clamp(2.5rem, 7.5vw, 7.5rem);
+      font-size: clamp(2.8rem, 7vw, 7rem);
       line-height: 0.82;
-      color: rgba(255, 255, 255, 0.022);
+      color: rgba(255, 255, 255, 0.03);
       letter-spacing: -0.06em;
       pointer-events: none;
       z-index: 0;
+      text-align: right;
+      max-width: 7ch;
     }
 
     .room-grid {
-      /* Two-column room layout: text block first, artwork cluster second. */
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: minmax(360px, 0.88fr) minmax(0, 1.5fr);
-      gap: clamp(3rem, 5vw, 6.5rem);
-      align-items: start;
-      width: min(1600px, 100%);
-      margin: 0;
+      grid-template-columns: minmax(320px, 0.78fr) minmax(0, 1.22fr);
+      gap: clamp(2.4rem, 4vw, 5rem);
+      align-items: center;
+      width: min(1500px, 100%);
+      margin: 0 auto;
     }
 
     .room-copy {
-      /* Explanatory text panel for each room. */
-      max-width: 39rem;
-      padding: 1.25rem 2rem 1.8rem 0;
-      border-bottom: 0;
-      margin-bottom: 0;
+      max-width: 36rem;
+      padding: 1.75rem 2rem 1.8rem;
       position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01)),
+        linear-gradient(180deg, rgba(94, 18, 12, 0.14), rgba(94, 18, 12, 0));
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.22);
+      backdrop-filter: blur(12px);
     }
 
     .room-copy::before {
-      /* Subtle framing box behind room copy. */
       content: "";
       position: absolute;
-      inset: 0 2rem 0 0;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
-        linear-gradient(90deg, rgba(94, 18, 12, 0.14), rgba(94, 18, 12, 0));
+      inset: 1rem;
+      border: 1px solid rgba(198, 160, 106, 0.12);
       pointer-events: none;
       z-index: -1;
     }
 
     .room-copy::after {
-      /* Decorative vertical accent line beside room copy. */
       content: "";
       position: absolute;
-      left: -1.1rem;
-      top: 2rem;
-      bottom: 2rem;
+      left: 1.2rem;
+      top: 1.2rem;
+      bottom: 1.2rem;
       width: 1px;
-      background: linear-gradient(180deg, rgba(198, 160, 106, 0.45), transparent);
+      background: linear-gradient(180deg, rgba(198, 160, 106, 0.42), transparent);
       pointer-events: none;
     }
 
@@ -682,42 +692,306 @@
     }
 
     .gallery-cluster {
-      /* Artwork cluster uses asymmetrical CSS grid layouts instead of a plain card list. */
       position: relative;
-      min-height: auto;
-      display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-      grid-template-rows: auto;
-      gap: 2rem;
-      padding: 0.85rem 0 0;
-      border: none;
-      background: transparent;
-      box-shadow: none;
-      backdrop-filter: none;
-      transform: none;
-      transform-origin: center bottom;
-      transition: none;
-      align-self: start;
+      min-height: min(72vh, 760px);
+      aspect-ratio: 1.06;
+      padding: 0;
+      align-self: stretch;
     }
 
-    .room.is-active .gallery-cluster {
-      opacity: 1;
-      transform: none;
-      box-shadow: none;
+    .room-floor {
+      position: relative;
+      height: 100%;
+      border-radius: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.05), transparent 22%),
+        radial-gradient(circle at 75% 28%, rgba(198, 160, 106, 0.08), transparent 24%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(10, 8, 7, 0.28));
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+        0 36px 90px rgba(0, 0, 0, 0.34);
+      overflow: hidden;
     }
 
-    .room:not(.is-active) .gallery-cluster {
-      opacity: 1;
-      transform: none;
+    .room-floor::before {
+      /* Main walkable floor. */
+      content: "";
+      position: absolute;
+      inset: 1.35rem;
+      border: 18px solid rgba(222, 208, 178, 0.92);
+      border-radius: 1.5rem;
+      background:
+        linear-gradient(90deg, rgba(127, 96, 68, 0.1) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(127, 96, 68, 0.1) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(245, 236, 220, 0.92), rgba(228, 213, 188, 0.95));
+      background-size: 62px 62px, 62px 62px, auto;
+      box-shadow:
+        inset 0 0 0 1px rgba(83, 56, 35, 0.08),
+        inset 0 0 40px rgba(94, 18, 12, 0.08);
+      z-index: 0;
     }
 
-    .gallery-cluster::before {
-      display: none;
+    .room-floor::after {
+      /* Circulation guide line reinforces the top-down map language. */
+      content: "";
+      position: absolute;
+      inset: 14% 17%;
+      border: 1px dashed rgba(94, 18, 12, 0.18);
+      border-radius: 1.1rem;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .floor-note,
+    .floor-axis,
+    .route-map,
+    .visitor-token,
+    .floor-door,
+    .floor-caption {
+      position: absolute;
+      z-index: 1;
+    }
+
+    .floor-note {
+      top: 1.9rem;
+      left: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      color: rgba(55, 28, 21, 0.82);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-family: "Manrope", sans-serif;
+      font-size: 0.7rem;
+      font-weight: 800;
+    }
+
+    .floor-note strong {
+      font-family: "Bodoni Moda", serif;
+      font-size: 0.94rem;
+      letter-spacing: 0.08em;
+      color: rgba(56, 25, 20, 0.88);
+    }
+
+    .floor-axis {
+      color: rgba(70, 41, 32, 0.55);
+      font-family: "Manrope", sans-serif;
+      font-size: 0.64rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .floor-axis--north {
+      top: 2.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .floor-axis--east {
+      right: 0.55rem;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      transform-origin: center;
+    }
+
+    .floor-axis--entry {
+      left: 50%;
+      bottom: 1.05rem;
+      transform: translateX(-50%);
+    }
+
+    .route-map {
+      inset: 1.35rem;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .route-svg {
+      position: absolute;
+      inset: 18px;
+      width: calc(100% - 36px);
+      height: calc(100% - 36px);
+      overflow: visible;
+    }
+
+    .route-line {
+      fill: none;
+      stroke: rgba(94, 18, 12, 0.26);
+      stroke-width: 0.42;
+      stroke-dasharray: 1.45 1.25;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .route-node {
+      position: absolute;
+      width: 0.95rem;
+      height: 0.95rem;
+      border-radius: 999px;
+      transform: translate(-50%, -50%);
+      background: rgba(115, 74, 48, 0.34);
+      box-shadow: 0 0 0 1px rgba(56, 25, 20, 0.08);
+      transition:
+        transform 260ms ease,
+        background 260ms ease,
+        box-shadow 260ms ease;
+    }
+
+    .route-node::after {
+      content: "";
+      position: absolute;
+      inset: 0.22rem;
+      border-radius: inherit;
+      background: rgba(245, 236, 220, 0.92);
+    }
+
+    .route-node.is-entry {
+      width: 1.15rem;
+      height: 1.15rem;
+      background: rgba(145, 98, 64, 0.42);
+    }
+
+    .route-node.is-active {
+      transform: translate(-50%, -50%) scale(1.22);
+      background: color-mix(in srgb, var(--room-accent) 72%, white 28%);
+      box-shadow:
+        0 0 0 8px color-mix(in srgb, var(--room-accent) 16%, transparent),
+        0 10px 24px rgba(94, 18, 12, 0.12);
+    }
+
+    .route-node.is-active::after {
+      background: rgba(42, 18, 14, 0.94);
+    }
+
+    .visitor-token {
+      left: 50%;
+      top: 52%;
+      transform: translate(-50%, -50%);
+      width: 4rem;
+      height: 4rem;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 25, 20, 0.12);
+      background: rgba(255, 248, 239, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 16px 28px rgba(94, 18, 12, 0.14);
+      backdrop-filter: blur(4px);
+      z-index: 3;
+      transition:
+        box-shadow 240ms ease,
+        transform 240ms ease;
+    }
+
+    .visitor-token.is-moving {
+      box-shadow:
+        0 18px 34px rgba(94, 18, 12, 0.22),
+        0 0 0 10px color-mix(in srgb, var(--room-accent) 12%, transparent);
+    }
+
+    .visitor-ping {
+      position: absolute;
+      inset: 0.48rem;
+      border-radius: 999px;
+      border: 1px solid rgba(94, 18, 12, 0.16);
+      animation: guidePulse 2.3s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes guidePulse {
+      0%, 100% {
+        transform: scale(0.96);
+        opacity: 0.46;
+      }
+      50% {
+        transform: scale(1.06);
+        opacity: 0.9;
+      }
+    }
+
+    .visitor-avatar {
+      position: relative;
+      width: 1.65rem;
+      height: 1.18rem;
+      border-radius: 0.85rem 0.85rem 0.7rem 0.7rem;
+      background: linear-gradient(180deg, rgba(221, 185, 130, 0.98), rgba(131, 83, 46, 0.98));
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.48),
+        0 8px 16px rgba(69, 34, 23, 0.2);
+    }
+
+    .visitor-avatar::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -0.54rem;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 999px;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, rgba(252, 246, 235, 1), rgba(221, 185, 130, 0.96));
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        0 4px 10px rgba(69, 34, 23, 0.15);
+    }
+
+    .visitor-avatar::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 0.28rem;
+      width: 0.72rem;
+      height: 0.18rem;
+      transform: translateX(-50%);
+      background:
+        radial-gradient(circle, rgba(42, 18, 14, 0.96) 0 45%, transparent 48%) left center / 0.18rem 0.18rem no-repeat,
+        radial-gradient(circle, rgba(42, 18, 14, 0.96) 0 45%, transparent 48%) right center / 0.18rem 0.18rem no-repeat;
+      opacity: 0.95;
+    }
+
+    .visitor-token::after {
+      content: "Guide Bot";
+      position: absolute;
+      top: calc(100% + 0.45rem);
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(56, 25, 20, 0.7);
+      font-family: "Manrope", sans-serif;
+      font-size: 0.56rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .floor-door {
+      left: 50%;
+      bottom: 1.15rem;
+      transform: translateX(-50%);
+      width: 18%;
+      min-width: 6.5rem;
+      height: 0.9rem;
+      border-radius: 0 0 999px 999px;
+      background: linear-gradient(180deg, rgba(145, 98, 64, 0.92), rgba(101, 59, 36, 0.96));
+      box-shadow: 0 -4px 0 rgba(71, 39, 23, 0.14);
+    }
+
+    .floor-caption {
+      right: 2rem;
+      bottom: 2rem;
+      max-width: 15rem;
+      color: rgba(70, 41, 32, 0.72);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1rem;
+      line-height: 1.5;
+      text-align: right;
     }
 
     .art-card {
-      /* Each artwork is a button so it can open the deep-dive overlay. */
-      position: relative;
+      /* Each artwork is now pinned to a wall inside the top-down room. */
+      position: absolute;
       padding: 0;
       border: 0;
       cursor: pointer;
@@ -737,9 +1011,10 @@
       /* Individual artwork frame treatment. */
       position: relative;
       height: 100%;
-      border: 1px solid rgba(198, 160, 106, 0.18);
-      background: rgba(255, 255, 255, 0.02);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(65, 36, 28, 0.18);
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: 0 18px 36px rgba(47, 24, 16, 0.18);
       overflow: hidden;
       transition: all 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
       cursor: pointer;
@@ -754,10 +1029,11 @@
     }
 
     .art-card:hover .frame,
-    .art-card.is-active .frame {
-      transform: translateY(-12px) rotate(var(--tilt)) scale(1.02);
-      border-color: rgba(198, 160, 106, 0.52);
-      box-shadow: 0 40px 80px rgba(94, 18, 12, 0.25), 0 0 60px rgba(198, 160, 106, 0.08);
+    .art-card.is-active .frame,
+    .art-card.is-focused .frame {
+      transform: translateY(-8px) scale(1.03);
+      border-color: rgba(121, 78, 53, 0.42);
+      box-shadow: 0 28px 50px rgba(94, 18, 12, 0.18), 0 0 36px rgba(198, 160, 106, 0.06);
     }
 
     .art-card img {
@@ -771,6 +1047,16 @@
 
     .art-card:hover img {
       filter: saturate(1.1) contrast(1.15) brightness(1);
+    }
+
+    .art-card.is-focused .frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 2px solid rgba(198, 160, 106, 0.7);
+      border-radius: inherit;
+      z-index: 2;
+      pointer-events: none;
     }
 
     .art-card .label {
@@ -801,7 +1087,7 @@
     .art-card .label strong {
       display: block;
       font-family: "Bodoni Moda", serif;
-      font-size: clamp(0.96rem, 1vw, 1.18rem);
+      font-size: clamp(0.78rem, 0.96vw, 1rem);
       line-height: 1.08;
       font-weight: 500;
     }
@@ -809,7 +1095,7 @@
     .art-card .label span {
       display: block;
       margin-top: 0.28rem;
-      font-size: 0.66rem;
+      font-size: 0.56rem;
       letter-spacing: 0.11em;
       text-transform: uppercase;
       color: rgba(255, 255, 255, 0.72);
@@ -822,7 +1108,7 @@
       right: 1.2rem;
       color: rgba(185, 138, 74, 0.8);
       font-family: "Bodoni Moda", serif;
-      font-size: clamp(2.2rem, 3.2vw, 3.5rem);
+      font-size: clamp(1.35rem, 2vw, 2.2rem);
       line-height: 1;
       letter-spacing: -0.04em;
       text-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
@@ -843,24 +1129,24 @@
     }
 
     /* Room-specific art placement.
-       Each room uses different proportions so the gallery feels curated rather than templated. */
-    .room-one .art-a { grid-column: 1; grid-row: 1 / span 2; min-height: 570px; --tilt: -1.5deg; }
-    .room-one .art-b { grid-column: 2; grid-row: 1; min-height: 300px; --tilt: 2deg; margin-top: 3rem; }
-    .room-one .art-c { grid-column: 2; grid-row: 2; min-height: 260px; --tilt: 1deg; }
-    .room-one .art-d { grid-column: 1 / span 2; grid-row: 3; min-height: 330px; --tilt: -0.8deg; margin-left: 8%; width: 84%; }
+       Each artwork is mounted to a wall so the interface reads as a floor plan. */
+    .room-one .art-a { top: 8%; left: 12%; width: 25%; height: 17%; }
+    .room-one .art-b { top: 17%; right: 8%; width: 15%; height: 28%; }
+    .room-one .art-c { bottom: 11%; right: 16%; width: 25%; height: 15%; }
+    .room-one .art-d { top: 46%; left: 8%; width: 16%; height: 26%; }
 
-    .room-two .art-a { grid-column: 1; grid-row: 1; min-height: 310px; --tilt: -3deg; margin-top: 3rem; }
-    .room-two .art-b { grid-column: 2; grid-row: 1 / span 2; min-height: 560px; --tilt: 1deg; }
-    .room-two .art-c { grid-column: 1; grid-row: 2; min-height: 300px; --tilt: 2deg; }
-    .room-two .art-d { grid-column: 1 / span 2; grid-row: 3; min-height: 300px; --tilt: -1deg; width: 88%; }
+    .room-two .art-a { top: 8%; left: 20%; width: 23%; height: 15%; }
+    .room-two .art-b { top: 22%; right: 9%; width: 15%; height: 32%; }
+    .room-two .art-c { bottom: 10%; left: 18%; width: 24%; height: 15%; }
+    .room-two .art-d { top: 26%; left: 8%; width: 16%; height: 27%; }
 
-    .room-three .art-a { grid-column: 1; grid-row: 1 / span 2; min-height: 590px; --tilt: -1deg; }
-    .room-three .art-b { grid-column: 2; grid-row: 1; min-height: 290px; --tilt: 2deg; margin-top: 4rem; }
-    .room-three .art-c { grid-column: 2; grid-row: 2; min-height: 300px; --tilt: 1deg; }
-    .room-three .art-d { grid-column: 1 / span 2; grid-row: 3; min-height: 300px; --tilt: -2deg; margin-left: 10%; width: 80%; }
+    .room-three .art-a { top: 8%; left: 10%; width: 28%; height: 18%; }
+    .room-three .art-b { top: 16%; right: 8%; width: 16%; height: 27%; }
+    .room-three .art-c { bottom: 11%; right: 17%; width: 24%; height: 16%; }
+    .room-three .art-d { top: 49%; left: 8%; width: 16%; height: 24%; }
 
     .hud {
-      /* Small brand bar that stays visible while scrolling. */
+      /* Brand bar plus direct room switching. */
       position: fixed;
       top: 0;
       left: 0;
@@ -869,16 +1155,16 @@
       display: flex;
       justify-content: space-between;
       gap: 2rem;
-      align-items: start;
-      padding: 1.5rem 2.2rem 0.9rem;
+      align-items: center;
+      padding: 1.4rem 2.1rem 0.9rem;
       pointer-events: none;
-      background: transparent;
-      backdrop-filter: none;
+      background: linear-gradient(180deg, rgba(14, 14, 13, 0.88) 0%, transparent 100%);
+      backdrop-filter: blur(10px);
       transition: all 300ms ease;
     }
 
     .hud.scrolled {
-      background: linear-gradient(180deg, rgba(14, 14, 13, 0.95) 0%, transparent 100%);
+      background: linear-gradient(180deg, rgba(14, 14, 13, 0.96) 0%, rgba(14, 14, 13, 0.55) 72%, transparent 100%);
       backdrop-filter: blur(12px);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
@@ -890,7 +1176,7 @@
     .brand-lockup {
       display: flex;
       flex-direction: column;
-      gap: 0.45rem;
+      gap: 0.3rem;
       transition: opacity 300ms ease, transform 300ms ease;
       opacity: 1;
       transform: translateY(0);
@@ -902,6 +1188,44 @@
       font-size: 0.8rem;
       font-weight: 800;
       color: rgba(239, 229, 211, 0.95);
+    }
+
+    .brand-lockup span {
+      color: rgba(239, 229, 211, 0.54);
+      font-family: "Manrope", sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .room-switcher {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .room-pill {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(17, 10, 10, 0.65);
+      color: rgba(239, 229, 211, 0.72);
+      padding: 0.8rem 1rem;
+      font-family: "Manrope", sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 800;
+      cursor: pointer;
+      transition: border-color 240ms ease, background 240ms ease, color 240ms ease, transform 240ms ease;
+    }
+
+    .room-pill:hover,
+    .room-pill.is-active {
+      border-color: rgba(198, 160, 106, 0.4);
+      background: rgba(46, 19, 18, 0.86);
+      color: rgba(239, 229, 211, 0.96);
+      transform: translateY(-2px);
     }
 
     /* Deep-dive overlay opens when an artwork is clicked. */
@@ -1024,81 +1348,8 @@
       font-size: 1rem;
     }
 
-    .scroll-cue {
-      /* Scroll hint appears near the bottom of the viewport to teach the page flow. */
-      position: fixed;
-      right: 1.8rem;
-      bottom: 1.7rem;
-      z-index: 35;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.9rem;
-      padding: 0.8rem 0.95rem 0.8rem 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(18, 10, 11, 0.76);
-      color: rgba(237, 231, 222, 0.76);
-      backdrop-filter: blur(12px);
-      cursor: pointer;
-      opacity: 0;
-      transform: translateY(12px);
-      pointer-events: none;
-      transition: opacity 240ms ease, transform 240ms ease, border-color 240ms ease;
-    }
-
-    .scroll-cue.is-visible {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-
-    .scroll-cue:hover {
-      border-color: rgba(198, 160, 106, 0.42);
-    }
-
-    .scroll-cue__text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.12rem;
-      text-align: left;
-    }
-
-    .scroll-cue__text strong {
-      font-size: 0.68rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      font-weight: 800;
-    }
-
-    .scroll-cue__text span {
-      font-family: "Cormorant Garamond", serif;
-      font-size: 0.96rem;
-      color: rgba(237, 231, 222, 0.56);
-    }
-
-    @keyframes scrollNudge {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(8px);
-      }
-    }
-
-    .scroll-cue__arrow {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 2.5rem;
-      height: 2.5rem;
-      border-radius: 999px;
-      border: 1px solid rgba(198, 160, 106, 0.34);
-      color: rgba(198, 160, 106, 0.96);
-      font-size: 1rem;
-      animation: scrollNudge 1.5s ease-in-out infinite;
-    }
-
     .help-bar {
-      display: none;
+      display: flex;
       position: fixed;
       left: 50%;
       bottom: 1.15rem;
@@ -1155,10 +1406,6 @@
         right: 0.4rem;
       }
 
-      .room {
-        padding: 7rem 1.8rem 4.5rem;
-      }
-
       .room-grid {
         grid-template-columns: 1fr;
         gap: 3rem;
@@ -1167,40 +1414,40 @@
 
       .room-copy {
         max-width: 46rem;
-        padding-right: 0;
       }
 
       .room-copy::before {
-        inset: 0;
+        inset: 1rem;
       }
 
       .room-copy::after {
         display: none;
       }
+
+      .gallery-cluster {
+        min-height: 38rem;
+        max-width: 52rem;
+      }
     }
 
     @media (max-width: 760px) {
-      /* Mobile adjustments: artwork cluster becomes a stacked column for readability. */
+      /* Mobile adjustments: keep the plan legible without reverting to a webpage list. */
       body {
         overflow-y: auto;
       }
 
-      .viewport {
-        overflow: visible;
-      }
-
       .track {
         width: 100%;
-        display: grid;
-        transform: none !important;
+        min-height: auto;
       }
 
       .room {
-        width: 100%;
+        position: relative;
+        inset: auto;
         min-height: auto;
-        padding: 8.25rem 1.5rem 4.25rem;
-        opacity: 1;
-        filter: none;
+        display: none;
+        opacity: 0;
+        transform: none;
       }
 
       .intro-screen {
@@ -1215,6 +1462,11 @@
 
       .intro-body {
         font-size: 1rem;
+      }
+
+      .intro-actions {
+        flex-direction: column;
+        align-items: stretch;
       }
 
       .intro-visuals {
@@ -1252,19 +1504,19 @@
         max-width: 100%;
       }
 
-      .gallery-cluster {
-        min-height: auto;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-        gap: 1.5rem;
-        transform: none;
-        padding: 1.5rem;
+      .room.is-active {
+        display: flex;
+        opacity: 1;
       }
 
-      .room.is-active .gallery-cluster,
-      .room:not(.is-active) .gallery-cluster {
-        opacity: 1;
-        transform: none;
+      .gallery-cluster {
+        min-height: 31rem;
+        aspect-ratio: auto;
+      }
+
+      .room-floor::before {
+        inset: 1rem;
+        border-width: 14px;
       }
 
       .room-one .art-a,
@@ -1279,11 +1531,8 @@
       .room-three .art-b,
       .room-three .art-c,
       .room-three .art-d {
-        grid-column: auto;
-        grid-row: auto;
-        min-height: 320px;
-        margin: 0;
-        width: auto;
+        width: 28%;
+        min-height: 0;
       }
 
       .hud {
@@ -1291,6 +1540,11 @@
         flex-direction: column;
         align-items: start;
         padding: 1.5rem 1.5rem 0;
+      }
+
+      .room-switcher {
+        width: 100%;
+        justify-content: flex-start;
       }
 
       .shell::after,
@@ -1306,28 +1560,56 @@
     }
 
     @media (max-width: 720px) {
-      .gallery-cluster,
       .deep-dive-card {
         grid-template-columns: 1fr;
       }
 
-      .gallery-cluster {
-        padding: 0.9rem;
+      .shell {
+        padding: 8.6rem 1rem 4.5rem;
       }
 
-      .deep-dive {
-        padding: 1rem;
+      .gallery-cluster {
+        min-height: 26rem;
+      }
+
+      .floor-note {
+        left: 1.4rem;
+        top: 1.4rem;
+      }
+
+      .floor-caption {
+        right: 1.3rem;
+        bottom: 1.6rem;
+        max-width: 11rem;
+        font-size: 0.88rem;
+      }
+
+      .visitor-token {
+        width: 3rem;
+        height: 3rem;
+      }
+
+      .room-one .art-a,
+      .room-one .art-b,
+      .room-one .art-c,
+      .room-one .art-d,
+      .room-two .art-a,
+      .room-two .art-b,
+      .room-two .art-c,
+      .room-two .art-d,
+      .room-three .art-a,
+      .room-three .art-b,
+      .room-three .art-c,
+      .room-three .art-d {
+        width: 30%;
       }
 
       .deep-dive-card {
         padding: 1rem;
       }
 
-      .scroll-cue {
-        right: 1rem;
-        left: 1rem;
-        bottom: 1rem;
-        justify-content: space-between;
+      .deep-dive {
+        padding: 1rem;
       }
     }
 
@@ -1344,11 +1626,15 @@
       <div class="intro-copy reveal-item" style="--reveal-delay: 0ms;">
         <p class="intro-kicker reveal-item reveal-item--soft" style="--reveal-delay: 60ms;">Golden Echoes</p>
         <h1 class="intro-title reveal-item reveal-item--soft" style="--reveal-delay: 150ms;"><span>Art Beyond</span><span>the Gallery</span><em>Wall</em></h1>
-        <p class="intro-body reveal-item reveal-item--soft" style="--reveal-delay: 260ms;">A cinematic three-room exhibition built from Rijksmuseum works. Scroll from the opening hero into themed spaces, and open each painting into a museum-style deep dive.</p>
-        <div class="intro-facts reveal-item reveal-item--soft" aria-hidden="true" style="--reveal-delay: 380ms;">
+        <p class="intro-body reveal-item reveal-item--soft" style="--reveal-delay: 260ms;">A three-room Rijksmuseum exhibition rebuilt as a top-down 2D gallery. Move through each plan, let a guide bot travel the route between artworks, and open each wall-mounted work into a museum-style deep dive.</p>
+        <div class="intro-actions reveal-item reveal-item--soft" style="--reveal-delay: 340ms;">
+          <button class="ghost-button ghost-button--portal" type="button" data-jump-room="0" data-enter-gallery="true">Enter Room 01</button>
+          <a class="ghost-button inline-flex items-center justify-center no-underline" href="https://www.rijksmuseum.nl/en/collection" target="_blank" rel="noreferrer">Open Rijksmuseum</a>
+        </div>
+        <div class="intro-facts reveal-item reveal-item--soft" aria-hidden="true" style="--reveal-delay: 420ms;">
           <span>3 rooms</span>
           <span>12 works</span>
-          <span>Rijksmuseum</span>
+          <span>Top-down route</span>
         </div>
       </div>
       <div class="intro-visuals reveal-item reveal-item--scale" aria-hidden="true" style="--reveal-delay: 160ms;">
@@ -1368,15 +1654,21 @@
     </div>
   </section>
   <!-- Main gallery app wrapper. -->
-  <div class="shell bg-ink">
+  <div class="shell bg-ink" id="galleryShell">
     <header class="hud">
       <div class="brand-lockup">
         <strong>Golden Echoes</strong>
+        <span>Top-down 2D gallery route</span>
       </div>
+      <nav class="room-switcher" aria-label="Room navigation">
+        <button class="room-pill" type="button" data-jump-room="0">01 Interior Stillness</button>
+        <button class="room-pill" type="button" data-jump-room="1">02 Open Horizon</button>
+        <button class="room-pill" type="button" data-jump-room="2">03 Public Theater</button>
+      </nav>
     </header>
 
     <div class="viewport">
-      <!-- All three themed rooms live inside one scrollable page flow. -->
+      <!-- Only one room is active at a time so the gallery behaves like a navigable floor plan. -->
       <main class="track" id="roomTrack">
         <section class="room room-one" data-room="0" data-ghost="Interior stillness">
           <div class="room-grid">
@@ -1384,11 +1676,11 @@
               <div class="eyebrow">Room 01</div>
               <h1 class="room-title">Interior <em>Stillness</em></h1>
               <p class="room-lead">Quiet gestures, private reading, and close observation make this room feel slowed down and intimate.</p>
-              <p class="room-body">The first room is organized as a calm sequence instead of a collage of competing text. The paintings sit in a cleaner wall arrangement so the experience feels closer to entering a curated chamber than scrolling past a homepage section.</p>
+              <p class="room-body">This room is drawn as a top-down chamber. The guide bot enters from the portal and walks the route between stops, so the space behaves like a navigable plan instead of a static thumbnail layout.</p>
               <div class="room-meta">
                 <span>4 works</span>
-                <span>Rijksmuseum</span>
-                <span>Click for deep dive</span>
+                <span>Top-down plan</span>
+                <span>Click any frame</span>
               </div>
               <div class="room-actions">
                 <button class="ghost-button ghost-button--portal" type="button" data-jump-room="1">Move to Room 02</button>
@@ -1406,11 +1698,11 @@
               <div class="eyebrow">Room 02</div>
               <h2 class="room-title">Open <em>Horizon</em></h2>
               <p class="room-lead">Brick streets, bleaching fields, storm clouds, and river wind push the gallery outward.</p>
-              <p class="room-body">The second room widens into landscape and outlook. The wall plan is more orderly here, so navigation feels intentional and the paintings read as a continuous 2D promenade through Dutch weather, streets, and distance.</p>
+              <p class="room-body">The second room opens into a longer floor plan with works placed around a circulation path. Left and right arrows switch rooms, while up and down arrows send the guide bot to the next stop.</p>
               <div class="room-meta">
                 <span>4 works</span>
                 <span>Landscape room</span>
-                <span>Arrow keys enabled</span>
+                <span>Arrow keys move</span>
               </div>
               <div class="room-actions">
                 <button class="ghost-button ghost-button--portal" type="button" data-jump-room="0">Back to Room 01</button>
@@ -1428,11 +1720,11 @@
               <div class="eyebrow">Room 03</div>
               <h2 class="room-title">Public <em>Theater</em></h2>
               <p class="room-lead">Guard companies, drapers, banquet tables, and family disorder turn public life into performance.</p>
-              <p class="room-body">The final room leans into spectacle and social performance. Heavier compositions and richer color close the gallery with a dramatic, public-facing atmosphere rather than another quiet display wall.</p>
+              <p class="room-body">The final room uses a more formal plan and heavier wall placements to close the route with a public, high-drama arrangement that still behaves like a navigable gallery map.</p>
               <div class="room-meta">
                 <span>4 works</span>
                 <span>Dramatic room</span>
-                <span>Virtual finale</span>
+                <span>Wall-mounted finale</span>
               </div>
               <div class="room-actions">
                 <button class="ghost-button ghost-button--portal" type="button" data-jump-room="1">Return to Room 02</button>
@@ -1446,14 +1738,11 @@
     </div>
 
   </div>
-  <!-- Scroll hint used after the hero to suggest that more content exists below. -->
-  <button class="scroll-cue" id="scrollCue" type="button" aria-label="Scroll to continue">
-    <span class="scroll-cue__text">
-      <strong>Scroll</strong>
-      <span>Continue through the gallery</span>
-    </span>
-    <span class="scroll-cue__arrow" aria-hidden="true">↓</span>
-  </button>
+  <div class="help-bar" aria-hidden="true">
+    <span>Left and right arrows switch rooms</span>
+    <span>Up and down arrows move the guide bot</span>
+    <span>Enter or click any framed work for details</span>
+  </div>
 
   <!-- Artwork detail overlay. Populated dynamically when an artwork is selected. -->
   <section class="deep-dive" id="deepDive" aria-hidden="true">
@@ -1512,6 +1801,14 @@
         accent: "#c6a06a",
         glow: "#6b4a2d",
         galleryClass: "room-one",
+        routeStops: [
+          { label: "Entry", x: 50, y: 87 },
+          { label: "Flowers in a Glass Vase", x: 30, y: 61 },
+          { label: "The Milkmaid", x: 33, y: 33 },
+          { label: "Woman Reading a Letter", x: 67, y: 40 },
+          { label: "The Love Letter", x: 60, y: 72 }
+        ],
+        artworkStopMap: [2, 3, 4, 1],
         artworks: [
           {
             slot: "art-a",
@@ -1566,6 +1863,14 @@
         accent: "#8f9b74",
         glow: "#4a5340",
         galleryClass: "room-two",
+        routeStops: [
+          { label: "Entry", x: 49, y: 87 },
+          { label: "View of Haarlem", x: 35, y: 73 },
+          { label: "Landscape", x: 27, y: 49 },
+          { label: "The Little Street", x: 42, y: 30 },
+          { label: "The Windmill", x: 68, y: 44 }
+        ],
+        artworkStopMap: [3, 4, 1, 2],
         artworks: [
           {
             slot: "art-a",
@@ -1620,6 +1925,14 @@
         accent: "#b9787b",
         glow: "#5e2320",
         galleryClass: "room-three",
+        routeStops: [
+          { label: "Entry", x: 49, y: 87 },
+          { label: "The Merry Family", x: 29, y: 62 },
+          { label: "The Night Watch", x: 34, y: 31 },
+          { label: "The Syndics", x: 67, y: 40 },
+          { label: "Banquet Still Life", x: 61, y: 72 }
+        ],
+        artworkStopMap: [2, 3, 4, 1],
         artworks: [
           {
             slot: "art-a",
@@ -1670,7 +1983,6 @@
     ];
 
     // Global UI references for room navigation and the deep-dive overlay.
-    const track = document.getElementById("roomTrack");
     const deepDive = document.getElementById("deepDive");
     const deepDiveCard = document.getElementById("deepDiveCard");
     const diveTitle = document.getElementById("diveTitle");
@@ -1681,34 +1993,206 @@
     const diveLink = document.getElementById("diveLink");
     const diveRoomLabel = document.getElementById("diveRoomLabel");
     const closeDiveButton = document.getElementById("closeDive");
-    const introScreen = document.getElementById("introScreen");
-    const scrollCue = document.getElementById("scrollCue");
+    const galleryShell = document.getElementById("galleryShell");
     const roomPanels = Array.from(document.querySelectorAll(".room"));
+    const roomPills = Array.from(document.querySelectorAll(".room-pill"));
 
     let activeRoom = 0;
     let activeCard = null;
+    let focusedArtworkByRoom = rooms.map(() => 0);
+    let visitorStopByRoom = rooms.map(() => 0);
     let openArtwork = null;
     let lastFocusedCard = null;
+    const focusableSelector = 'a[href], button, input, select, textarea, [tabindex]';
 
-    // Show the scroll hint near the top of the experience, then hide it once
-    // the user has clearly moved into the gallery.
-    function updateScrollCue() {
-      if (!scrollCue) {
+    function setInteractiveState(container, isActive) {
+      if (!container) {
         return;
       }
 
-      const introHeight = introScreen ? introScreen.offsetHeight : window.innerHeight;
-      const shouldShow = !deepDive.classList.contains("is-open")
-        && window.scrollY < Math.max(220, introHeight - 140);
+      container.setAttribute("aria-hidden", String(!isActive));
+      container.toggleAttribute("inert", !isActive);
 
-      scrollCue.classList.toggle("is-visible", shouldShow);
+      container.querySelectorAll(focusableSelector).forEach((element) => {
+        if (isActive) {
+          element.removeAttribute("tabindex");
+        } else {
+          element.setAttribute("tabindex", "-1");
+        }
+      });
     }
 
-    // Build all artwork cards from the data above so HTML stays manageable.
+    function getRoomFloor(roomIndex) {
+      return document.querySelector(`#room-${roomIndex}-gallery .room-floor`);
+    }
+
+    function getRoomVisitorToken(roomIndex) {
+      return document.querySelector(`#room-${roomIndex}-gallery .visitor-token`);
+    }
+
+    function getRoomArtworkCards(roomIndex) {
+      return Array.from(document.querySelectorAll(`#room-${roomIndex}-gallery .art-card`));
+    }
+
+    function getRoomRouteNodes(roomIndex) {
+      return Array.from(document.querySelectorAll(`#room-${roomIndex}-gallery .route-node`));
+    }
+
+    function setTokenPosition(token, stop) {
+      if (!token || !stop) {
+        return;
+      }
+
+      token.style.left = `${stop.x}%`;
+      token.style.top = `${stop.y}%`;
+    }
+
+    function updateRouteStops(roomIndex, activeStopIndex) {
+      getRoomRouteNodes(roomIndex).forEach((node, index) => {
+        node.classList.toggle("is-active", index === activeStopIndex);
+      });
+    }
+
+    function buildStopSequence(stopCount, currentIndex, targetIndex) {
+      if (stopCount <= 1 || currentIndex === targetIndex) {
+        return [targetIndex];
+      }
+
+      const clockwise = [currentIndex];
+      let index = currentIndex;
+      while (index !== targetIndex) {
+        index = (index + 1) % stopCount;
+        clockwise.push(index);
+      }
+
+      const counterClockwise = [currentIndex];
+      index = currentIndex;
+      while (index !== targetIndex) {
+        index = (index - 1 + stopCount) % stopCount;
+        counterClockwise.push(index);
+      }
+
+      return clockwise.length <= counterClockwise.length ? clockwise : counterClockwise;
+    }
+
+    function animateVisitorToken(roomIndex, targetStopIndex, options = {}) {
+      const { instant = false } = options;
+      const token = getRoomVisitorToken(roomIndex);
+      const stops = rooms[roomIndex].routeStops || [];
+
+      if (!token || !stops.length) {
+        return;
+      }
+
+      const boundedTargetIndex = ((targetStopIndex % stops.length) + stops.length) % stops.length;
+      const currentStopIndex = visitorStopByRoom[roomIndex] ?? 0;
+      const targetStop = stops[boundedTargetIndex];
+
+      updateRouteStops(roomIndex, boundedTargetIndex);
+
+      if (instant || currentStopIndex === boundedTargetIndex) {
+        setTokenPosition(token, targetStop);
+        token.classList.remove("is-moving");
+        visitorStopByRoom[roomIndex] = boundedTargetIndex;
+        return;
+      }
+
+      const stopSequence = buildStopSequence(stops.length, currentStopIndex, boundedTargetIndex);
+
+      if (stopSequence.length <= 1) {
+        setTokenPosition(token, targetStop);
+        visitorStopByRoom[roomIndex] = boundedTargetIndex;
+        return;
+      }
+
+      const keyframes = stopSequence.map((stopIndex, index) => ({
+        left: `${stops[stopIndex].x}%`,
+        top: `${stops[stopIndex].y}%`,
+        offset: index / (stopSequence.length - 1)
+      }));
+
+      token.getAnimations().forEach((animation) => animation.cancel());
+      token.classList.add("is-moving");
+
+      const animation = token.animate(keyframes, {
+        duration: Math.max(560, (stopSequence.length - 1) * 300),
+        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+        fill: "forwards"
+      });
+
+      animation.onfinish = () => {
+        setTokenPosition(token, targetStop);
+        token.classList.remove("is-moving");
+      };
+
+      animation.oncancel = () => {
+        token.classList.remove("is-moving");
+      };
+
+      visitorStopByRoom[roomIndex] = boundedTargetIndex;
+    }
+
+    function focusArtwork(roomIndex, artworkIndex, options = {}) {
+      const { moveVisitor = true, instant = false, fromEntry = false } = options;
+      const cards = getRoomArtworkCards(roomIndex);
+      if (!cards.length) {
+        return;
+      }
+
+      const nextIndex = (artworkIndex + cards.length) % cards.length;
+      focusedArtworkByRoom[roomIndex] = nextIndex;
+
+      cards.forEach((card, index) => {
+        card.classList.toggle("is-focused", index === nextIndex);
+      });
+
+      if (moveVisitor) {
+        requestAnimationFrame(() => {
+          const routeStops = rooms[roomIndex].routeStops || [];
+          const targetStopIndex = rooms[roomIndex].artworkStopMap?.[nextIndex] ?? Math.min(nextIndex + 1, routeStops.length - 1);
+
+          if (fromEntry && routeStops[0]) {
+            visitorStopByRoom[roomIndex] = 0;
+            setTokenPosition(getRoomVisitorToken(roomIndex), routeStops[0]);
+          }
+
+          animateVisitorToken(roomIndex, targetStopIndex, { instant });
+        });
+      }
+    }
+
+    // Build all artwork cards from the data above so the HTML stays manageable.
     function buildRooms() {
       rooms.forEach((room, roomIndex) => {
         const gallery = document.getElementById(`room-${roomIndex}-gallery`);
         if (!gallery) return;
+
+        gallery.innerHTML = `
+          <div class="room-floor">
+            <div class="floor-note">
+              <strong>${room.code}</strong>
+              <span>${room.shortTheme}</span>
+            </div>
+            <div class="floor-axis floor-axis--north">North wall</div>
+            <div class="floor-axis floor-axis--east">East wall</div>
+            <div class="floor-axis floor-axis--entry">Entry portal</div>
+            <div class="route-map" aria-hidden="true">
+              <svg class="route-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <polyline class="route-line" points="${room.routeStops.map((stop) => `${stop.x},${stop.y}`).join(" ")} ${room.routeStops[0].x},${room.routeStops[0].y}"></polyline>
+              </svg>
+              ${room.routeStops.map((stop, stopIndex) => `<span class="route-node${stopIndex === 0 ? " is-entry" : ""}" style="left:${stop.x}%; top:${stop.y}%;" aria-hidden="true"></span>`).join("")}
+            </div>
+            <div class="visitor-token" aria-hidden="true">
+              <span class="visitor-ping"></span>
+              <span class="visitor-avatar"></span>
+            </div>
+            <div class="floor-door" aria-hidden="true"></div>
+            <div class="floor-caption">Guide bot route with four artwork stops mounted around the room.</div>
+          </div>
+        `;
+
+        const floor = gallery.querySelector(".room-floor");
+        if (!floor) return;
 
         // Push each room's accent colors into CSS custom properties for styling.
         if (gallery.parentElement && gallery.parentElement.parentElement) {
@@ -1717,12 +2201,12 @@
         }
 
         room.artworks.forEach((artwork, artworkIndex) => {
-          // Each artwork is rendered as a button because clicking opens the deep-dive panel.
           const button = document.createElement("button");
           button.type = "button";
           button.className = `art-card reveal-item reveal-item--scale ${artwork.slot}`;
           button.dataset.roomIndex = roomIndex;
           button.dataset.artIndex = artworkIndex;
+          button.setAttribute("aria-label", `Open ${artwork.title} by ${artwork.artist}`);
           button.style.setProperty("--reveal-delay", `${140 + artworkIndex * 110}ms`);
           button.innerHTML = `
             <div class="frame">
@@ -1736,37 +2220,42 @@
           `;
 
           button.addEventListener("click", () => openDeepDive(roomIndex, artworkIndex, button));
-          gallery.appendChild(button);
+          floor.appendChild(button);
         });
       });
     }
 
-    // Scroll the page to a target room index while keeping the active room state updated.
-    function scrollToRoom(index, behavior = "smooth") {
-      const nextIndex = (index + rooms.length) % rooms.length;
-      const targetRoom = roomPanels[nextIndex];
-      if (targetRoom) {
-        targetRoom.scrollIntoView({ behavior, block: "start" });
-      }
-      activeRoom = nextIndex;
-      updateMap();
-    }
-
-    // Track which room is currently closest to the viewport focus point.
     function updateMap() {
       roomPanels.forEach((panel, index) => {
-        panel.classList.toggle("is-active", index === activeRoom);
+        const isActive = index === activeRoom;
+        panel.classList.toggle("is-active", isActive);
+        setInteractiveState(panel, isActive);
       });
+
+      roomPills.forEach((pill) => {
+        const isActive = Number(pill.dataset.jumpRoom) === activeRoom;
+        pill.classList.toggle("is-active", isActive);
+        pill.setAttribute("aria-pressed", String(isActive));
+      });
+
       document.documentElement.style.setProperty("--room-index", activeRoom);
     }
 
-    function setRoom(index) {
-      activeRoom = (index + rooms.length) % rooms.length;
+    function activateRoom(index, options = {}) {
+      const { enterGallery = false } = options;
+      const nextRoom = (index + rooms.length) % rooms.length;
+      const roomChanged = nextRoom !== activeRoom;
+      activeRoom = nextRoom;
       updateMap();
+      focusArtwork(activeRoom, focusedArtworkByRoom[activeRoom], { fromEntry: roomChanged });
+
+      if (enterGallery && galleryShell) {
+        galleryShell.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
 
     function stepRoom(delta) {
-      scrollToRoom(activeRoom + delta);
+      activateRoom(activeRoom + delta);
     }
 
     // Visually mark the last artwork that opened the overlay.
@@ -1801,7 +2290,7 @@
     // Web Animations API entrance for the deep-dive modal.
     function animateDiveOpen(sourceCard) {
       deepDive.classList.add("is-open");
-      deepDive.setAttribute("aria-hidden", "false");
+      setInteractiveState(deepDive, true);
 
       const overlayAnimation = deepDive.animate(
         [
@@ -1888,12 +2377,12 @@
 
     // Main entry point for opening an artwork from any room.
     async function openDeepDive(roomIndex, artworkIndex, sourceCard) {
-      scrollToRoom(roomIndex);
+      activateRoom(roomIndex);
+      focusArtwork(roomIndex, artworkIndex);
       populateDeepDive(roomIndex, artworkIndex);
       markActiveCard(sourceCard);
       lastFocusedCard = sourceCard || null;
       await animateDiveOpen(sourceCard);
-      updateScrollCue();
     }
 
     // Close the artwork overlay and restore keyboard focus to the last clicked card.
@@ -1903,18 +2392,19 @@
       }
       await animateDiveClose();
       deepDive.classList.remove("is-open");
-      deepDive.setAttribute("aria-hidden", "true");
+      setInteractiveState(deepDive, false);
       if (lastFocusedCard) {
         lastFocusedCard.focus();
       }
-      updateScrollCue();
     }
 
-    // Register all non-generated interactions: room jumps, overlay close, keyboard nav, scroll cue.
+    // Register all non-generated interactions: room jumps, overlay close, and keyboard nav.
     function bindControls() {
       document.querySelectorAll("[data-jump-room]").forEach((button) => {
         button.addEventListener("click", () => {
-          scrollToRoom(Number(button.dataset.jumpRoom));
+          activateRoom(Number(button.dataset.jumpRoom), {
+            enterGallery: button.hasAttribute("data-enter-gallery")
+          });
         });
       });
 
@@ -1925,25 +2415,18 @@
         }
       });
 
-      if (scrollCue) {
-        scrollCue.addEventListener("click", () => {
-          const firstArtwork = document.querySelector("#room-0-gallery .art-card");
-          if (firstArtwork) {
-            firstArtwork.scrollIntoView({ behavior: "smooth", block: "center" });
-          } else if (roomPanels[0]) {
-            roomPanels[0].scrollIntoView({ behavior: "smooth", block: "start" });
-          }
-        });
-      }
-
       document.addEventListener("keydown", (event) => {
-        // Escape closes the overlay. Arrow keys move between rooms.
+        // Escape closes the overlay. Left/right switch rooms. Up/down move between works.
         if (deepDive.classList.contains("is-open") && event.key === "Escape") {
           closeDeepDive();
           return;
         }
 
-        if (["ArrowLeft", "ArrowRight"].includes(event.key)) {
+        if (deepDive.classList.contains("is-open")) {
+          return;
+        }
+
+        if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
           event.preventDefault();
         }
 
@@ -1954,40 +2437,42 @@
         if (event.key === "ArrowRight") {
           stepRoom(1);
         }
+
+        if (event.key === "ArrowUp") {
+          focusArtwork(activeRoom, focusedArtworkByRoom[activeRoom] - 1);
+        }
+
+        if (event.key === "ArrowDown") {
+          focusArtwork(activeRoom, focusedArtworkByRoom[activeRoom] + 1);
+        }
+
+        if (event.key === "Enter" || event.key === " ") {
+          const cards = getRoomArtworkCards(activeRoom);
+          const card = cards[focusedArtworkByRoom[activeRoom]];
+          if (card) {
+            event.preventDefault();
+            openDeepDive(activeRoom, focusedArtworkByRoom[activeRoom], card);
+          }
+        }
       });
 
-      // Wheel event no longer needed for room navigation - uses natural scrolling
-      // Update the active room as the user naturally scrolls through the page.
-      window.addEventListener(
-        "scroll",
-        () => {
-          let closestIndex = 0;
-          let closestDistance = Infinity;
-
-          roomPanels.forEach((panel, index) => {
-            const rect = panel.getBoundingClientRect();
-            const distance = Math.abs(rect.top - window.innerHeight / 3);
-            if (distance < closestDistance) {
-              closestDistance = distance;
-              closestIndex = index;
-            }
-          });
-
-          if (closestIndex !== activeRoom) {
-            activeRoom = closestIndex;
-            updateMap();
-          }
-
-          updateScrollCue();
-        }
-      );
+      window.addEventListener("resize", () => {
+        focusArtwork(activeRoom, focusedArtworkByRoom[activeRoom], { instant: true });
+      });
     }
 
     // Initial page bootstrapping.
     buildRooms();
     bindControls();
+    setInteractiveState(deepDive, false);
     updateMap();
-    updateScrollCue();
+    rooms.forEach((room, roomIndex) => {
+      if (room.routeStops?.[0]) {
+        setTokenPosition(getRoomVisitorToken(roomIndex), room.routeStops[0]);
+        updateRouteStops(roomIndex, 0);
+      }
+      focusArtwork(roomIndex, focusedArtworkByRoom[roomIndex], { instant: true });
+    });
 
     // Reveal items progressively as the user scrolls down the page.
     const observerOptions = {
