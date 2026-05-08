@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -491,6 +492,7 @@
       from {
         width: 0;
       }
+
       to {
         width: 60px;
       }
@@ -555,6 +557,7 @@
       from {
         width: 0;
       }
+
       to {
         width: 100%;
       }
@@ -755,7 +758,8 @@
 
     .floor-note {
       top: 1.9rem;
-      left: 2rem;
+      right: 2rem;
+      text-align: right;
       display: flex;
       flex-direction: column;
       gap: 0.2rem;
@@ -901,10 +905,13 @@
     }
 
     @keyframes guidePulse {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: scale(0.96);
         opacity: 0.46;
       }
+
       50% {
         transform: scale(1.06);
         opacity: 0.9;
@@ -1130,20 +1137,89 @@
 
     /* Room-specific art placement.
        Each artwork is mounted to a wall so the interface reads as a floor plan. */
-    .room-one .art-a { top: 8%; left: 12%; width: 25%; height: 17%; }
-    .room-one .art-b { top: 17%; right: 8%; width: 15%; height: 28%; }
-    .room-one .art-c { bottom: 11%; right: 16%; width: 25%; height: 15%; }
-    .room-one .art-d { top: 46%; left: 8%; width: 16%; height: 26%; }
+    .room-one .art-a {
+      top: 8%;
+      left: 12%;
+      width: 25%;
+      height: 17%;
+    }
 
-    .room-two .art-a { top: 8%; left: 20%; width: 23%; height: 15%; }
-    .room-two .art-b { top: 22%; right: 9%; width: 15%; height: 32%; }
-    .room-two .art-c { bottom: 10%; left: 18%; width: 24%; height: 15%; }
-    .room-two .art-d { top: 26%; left: 8%; width: 16%; height: 27%; }
+    .room-one .art-b {
+      top: 17%;
+      right: 8%;
+      width: 15%;
+      height: 28%;
+    }
 
-    .room-three .art-a { top: 8%; left: 10%; width: 28%; height: 18%; }
-    .room-three .art-b { top: 16%; right: 8%; width: 16%; height: 27%; }
-    .room-three .art-c { bottom: 11%; right: 17%; width: 24%; height: 16%; }
-    .room-three .art-d { top: 49%; left: 8%; width: 16%; height: 24%; }
+    .room-one .art-c {
+      bottom: 11%;
+      right: 16%;
+      width: 25%;
+      height: 15%;
+    }
+
+    .room-one .art-d {
+      top: 46%;
+      left: 8%;
+      width: 16%;
+      height: 26%;
+    }
+
+    .room-two .art-a {
+      top: 8%;
+      left: 20%;
+      width: 23%;
+      height: 15%;
+    }
+
+    .room-two .art-b {
+      top: 22%;
+      right: 9%;
+      width: 15%;
+      height: 32%;
+    }
+
+    .room-two .art-c {
+      bottom: 12%;
+      left: 38%;
+      width: 24%;
+      height: 15%;
+    }
+
+    .room-two .art-d {
+      top: 26%;
+      left: 8%;
+      width: 16%;
+      height: 27%;
+    }
+
+    .room-three .art-a {
+      top: 8%;
+      left: 10%;
+      width: 28%;
+      height: 18%;
+    }
+
+    .room-three .art-b {
+      top: 16%;
+      right: 8%;
+      width: 16%;
+      height: 27%;
+    }
+
+    .room-three .art-c {
+      bottom: 11%;
+      right: 17%;
+      width: 24%;
+      height: 16%;
+    }
+
+    .room-three .art-d {
+      top: 49%;
+      left: 8%;
+      width: 16%;
+      height: 24%;
+    }
 
     .hud {
       /* Brand bar plus direct room switching. */
@@ -1169,7 +1245,7 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
 
-    .hud > * {
+    .hud>* {
       pointer-events: auto;
     }
 
@@ -1371,6 +1447,7 @@
     }
 
     @media (max-width: 1100px) {
+
       /* Tablet adjustments: collapse hero and room layout into one column sooner. */
       .intro-panel {
         grid-template-columns: 1fr;
@@ -1431,6 +1508,7 @@
     }
 
     @media (max-width: 760px) {
+
       /* Mobile adjustments: keep the plan legible without reverting to a webpage list. */
       body {
         overflow-y: auto;
@@ -1619,17 +1697,23 @@
     }
   </style>
 </head>
+
 <body>
   <!-- Opening hero section. This is the first thing visitors see before they scroll into the rooms. -->
   <section class="intro-screen" id="introScreen" aria-label="Welcome screen">
     <div class="intro-panel">
       <div class="intro-copy reveal-item" style="--reveal-delay: 0ms;">
         <p class="intro-kicker reveal-item reveal-item--soft" style="--reveal-delay: 60ms;">Golden Echoes</p>
-        <h1 class="intro-title reveal-item reveal-item--soft" style="--reveal-delay: 150ms;"><span>Art Beyond</span><span>the Gallery</span><em>Wall</em></h1>
-        <p class="intro-body reveal-item reveal-item--soft" style="--reveal-delay: 260ms;">A three-room Rijksmuseum exhibition rebuilt as a top-down 2D gallery. Move through each plan, let a guide bot travel the route between artworks, and open each wall-mounted work into a museum-style deep dive.</p>
+        <h1 class="intro-title reveal-item reveal-item--soft" style="--reveal-delay: 150ms;"><span>Art
+            Beyond</span><span>the Gallery</span><em>Wall</em></h1>
+        <p class="intro-body reveal-item reveal-item--soft" style="--reveal-delay: 260ms;">A three-room Rijksmuseum
+          exhibition rebuilt as a top-down 2D gallery. Move through each plan, let a guide bot travel the route between
+          artworks, and open each wall-mounted work into a museum-style deep dive.</p>
         <div class="intro-actions reveal-item reveal-item--soft" style="--reveal-delay: 340ms;">
-          <button class="ghost-button ghost-button--portal" type="button" data-jump-room="0" data-enter-gallery="true">Enter Room 01</button>
-          <a class="ghost-button inline-flex items-center justify-center no-underline" href="https://www.rijksmuseum.nl/en/collection" target="_blank" rel="noreferrer">Open Rijksmuseum</a>
+          <button class="ghost-button ghost-button--portal" type="button" data-jump-room="0"
+            data-enter-gallery="true">Enter Room 01</button>
+          <a class="ghost-button inline-flex items-center justify-center no-underline"
+            href="https://www.rijksmuseum.nl/en/collection" target="_blank" rel="noreferrer">Open Rijksmuseum</a>
         </div>
         <div class="intro-facts reveal-item reveal-item--soft" aria-hidden="true" style="--reveal-delay: 420ms;">
           <span>3 rooms</span>
@@ -1639,11 +1723,14 @@
       </div>
       <div class="intro-visuals reveal-item reveal-item--scale" aria-hidden="true" style="--reveal-delay: 160ms;">
         <div class="intro-year reveal-item reveal-item--soft" style="--reveal-delay: 220ms;">2026</div>
-        <div class="intro-side-note reveal-item reveal-item--soft" style="--reveal-delay: 320ms;">Virtual museum • Rijksmuseum selection</div>
-        <figure class="intro-hero-frame intro-hero-frame--tall reveal-item reveal-item--scale" style="--reveal-delay: 260ms;">
+        <div class="intro-side-note reveal-item reveal-item--soft" style="--reveal-delay: 320ms;">Virtual museum •
+          Rijksmuseum selection</div>
+        <figure class="intro-hero-frame intro-hero-frame--tall reveal-item reveal-item--scale"
+          style="--reveal-delay: 260ms;">
           <img src="https://iiif.micr.io/QkOGy/39,43,4541,5040/^600,/0/default.webp" alt="">
         </figure>
-        <figure class="intro-hero-frame intro-hero-frame--small reveal-item reveal-item--scale" style="--reveal-delay: 420ms;">
+        <figure class="intro-hero-frame intro-hero-frame--small reveal-item reveal-item--scale"
+          style="--reveal-delay: 420ms;">
           <img src="https://iiif.micr.io/cWWQE/98,98,10691,7210/^600,/0/default.webp" alt="">
         </figure>
         <div class="intro-tag reveal-item reveal-item--soft" style="--reveal-delay: 520ms;">
@@ -1675,16 +1762,21 @@
             <div class="room-copy reveal-item reveal-item--soft" style="--reveal-delay: 0ms;">
               <div class="eyebrow">Room 01</div>
               <h1 class="room-title">Interior <em>Stillness</em></h1>
-              <p class="room-lead">Quiet gestures, private reading, and close observation make this room feel slowed down and intimate.</p>
-              <p class="room-body">This room is drawn as a top-down chamber. The guide bot enters from the portal and walks the route between stops, so the space behaves like a navigable plan instead of a static thumbnail layout.</p>
+              <p class="room-lead">Quiet gestures, private reading, and close observation make this room feel slowed
+                down and intimate.</p>
+              <p class="room-body">This room is drawn as a top-down chamber. The guide bot enters from the portal and
+                walks the route between stops, so the space behaves like a navigable plan instead of a static thumbnail
+                layout.</p>
               <div class="room-meta">
                 <span>4 works</span>
                 <span>Top-down plan</span>
                 <span>Click any frame</span>
               </div>
               <div class="room-actions">
-                <button class="ghost-button ghost-button--portal" type="button" data-jump-room="1">Move to Room 02</button>
-                <a class="ghost-button inline-flex items-center justify-center no-underline" href="https://www.rijksmuseum.nl/en/collection" target="_blank" rel="noreferrer">Open Collection</a>
+                <button class="ghost-button ghost-button--portal" type="button" data-jump-room="1">Move to Room
+                  02</button>
+                <a class="ghost-button inline-flex items-center justify-center no-underline"
+                  href="https://www.rijksmuseum.nl/en/collection" target="_blank" rel="noreferrer">Open Collection</a>
               </div>
             </div>
 
@@ -1697,16 +1789,21 @@
             <div class="room-copy reveal-item reveal-item--soft" style="--reveal-delay: 0ms;">
               <div class="eyebrow">Room 02</div>
               <h2 class="room-title">Open <em>Horizon</em></h2>
-              <p class="room-lead">Brick streets, bleaching fields, storm clouds, and river wind push the gallery outward.</p>
-              <p class="room-body">The second room opens into a longer floor plan with works placed around a circulation path. Left and right arrows switch rooms, while up and down arrows send the guide bot to the next stop.</p>
+              <p class="room-lead">Brick streets, bleaching fields, storm clouds, and river wind push the gallery
+                outward.</p>
+              <p class="room-body">The second room opens into a longer floor plan with works placed around a circulation
+                path. Left and right arrows switch rooms, while up and down arrows send the guide bot to the next stop.
+              </p>
               <div class="room-meta">
                 <span>4 works</span>
                 <span>Landscape room</span>
                 <span>Arrow keys move</span>
               </div>
               <div class="room-actions">
-                <button class="ghost-button ghost-button--portal" type="button" data-jump-room="0">Back to Room 01</button>
-                <button class="ghost-button ghost-button--portal" type="button" data-jump-room="2">Continue to Room 03</button>
+                <button class="ghost-button ghost-button--portal" type="button" data-jump-room="0">Back to Room
+                  01</button>
+                <button class="ghost-button ghost-button--portal" type="button" data-jump-room="2">Continue to Room
+                  03</button>
               </div>
             </div>
 
@@ -1719,15 +1816,18 @@
             <div class="room-copy reveal-item reveal-item--soft" style="--reveal-delay: 0ms;">
               <div class="eyebrow">Room 03</div>
               <h2 class="room-title">Public <em>Theater</em></h2>
-              <p class="room-lead">Guard companies, drapers, banquet tables, and family disorder turn public life into performance.</p>
-              <p class="room-body">The final room uses a more formal plan and heavier wall placements to close the route with a public, high-drama arrangement that still behaves like a navigable gallery map.</p>
+              <p class="room-lead">Guard companies, drapers, banquet tables, and family disorder turn public life into
+                performance.</p>
+              <p class="room-body">The final room uses a more formal plan and heavier wall placements to close the route
+                with a public, high-drama arrangement that still behaves like a navigable gallery map.</p>
               <div class="room-meta">
                 <span>4 works</span>
                 <span>Dramatic room</span>
                 <span>Wall-mounted finale</span>
               </div>
               <div class="room-actions">
-                <button class="ghost-button ghost-button--portal" type="button" data-jump-room="1">Return to Room 02</button>
+                <button class="ghost-button ghost-button--portal" type="button" data-jump-room="1">Return to Room
+                  02</button>
               </div>
             </div>
 
@@ -1737,11 +1837,6 @@
       </main>
     </div>
 
-  </div>
-  <div class="help-bar" aria-hidden="true">
-    <span>Left and right arrows switch rooms</span>
-    <span>Up and down arrows move the guide bot</span>
-    <span>Enter or click any framed work for details</span>
   </div>
 
   <!-- Artwork detail overlay. Populated dynamically when an artwork is selected. -->
@@ -1802,13 +1897,13 @@
         glow: "#6b4a2d",
         galleryClass: "room-one",
         routeStops: [
-          { label: "Entry", x: 50, y: 87 },
           { label: "Flowers in a Glass Vase", x: 30, y: 61 },
           { label: "The Milkmaid", x: 33, y: 33 },
           { label: "Woman Reading a Letter", x: 67, y: 40 },
           { label: "The Love Letter", x: 60, y: 72 }
         ],
-        artworkStopMap: [2, 3, 4, 1],
+        // Mapping Artworks [0,1,2,3] to new Stop Indices [1,2,3,0]
+        artworkStopMap: [1, 2, 3, 0],
         artworks: [
           {
             slot: "art-a",
@@ -1864,13 +1959,12 @@
         glow: "#4a5340",
         galleryClass: "room-two",
         routeStops: [
-          { label: "Entry", x: 49, y: 87 },
           { label: "View of Haarlem", x: 35, y: 73 },
           { label: "Landscape", x: 27, y: 49 },
           { label: "The Little Street", x: 42, y: 30 },
           { label: "The Windmill", x: 68, y: 44 }
         ],
-        artworkStopMap: [3, 4, 1, 2],
+        artworkStopMap: [2, 3, 0, 1],
         artworks: [
           {
             slot: "art-a",
@@ -1926,13 +2020,12 @@
         glow: "#5e2320",
         galleryClass: "room-three",
         routeStops: [
-          { label: "Entry", x: 49, y: 87 },
           { label: "The Merry Family", x: 29, y: 62 },
           { label: "The Night Watch", x: 34, y: 31 },
           { label: "The Syndics", x: 67, y: 40 },
           { label: "Banquet Still Life", x: 61, y: 72 }
         ],
-        artworkStopMap: [2, 3, 4, 1],
+        artworkStopMap: [1, 2, 3, 0],
         artworks: [
           {
             slot: "art-a",
@@ -2133,11 +2226,9 @@
     }
 
     function focusArtwork(roomIndex, artworkIndex, options = {}) {
-      const { moveVisitor = true, instant = false, fromEntry = false } = options;
+      const { moveVisitor = true, instant = false } = options; // Removed 'fromEntry'
       const cards = getRoomArtworkCards(roomIndex);
-      if (!cards.length) {
-        return;
-      }
+      if (!cards.length) return;
 
       const nextIndex = (artworkIndex + cards.length) % cards.length;
       focusedArtworkByRoom[roomIndex] = nextIndex;
@@ -2147,17 +2238,10 @@
       });
 
       if (moveVisitor) {
-        requestAnimationFrame(() => {
-          const routeStops = rooms[roomIndex].routeStops || [];
-          const targetStopIndex = rooms[roomIndex].artworkStopMap?.[nextIndex] ?? Math.min(nextIndex + 1, routeStops.length - 1);
-
-          if (fromEntry && routeStops[0]) {
-            visitorStopByRoom[roomIndex] = 0;
-            setTokenPosition(getRoomVisitorToken(roomIndex), routeStops[0]);
-          }
-
-          animateVisitorToken(roomIndex, targetStopIndex, { instant });
-        });
+        const routeStops = rooms[roomIndex].routeStops || [];
+        // The target is now always a valid artwork stop
+        const targetStopIndex = rooms[roomIndex].artworkStopMap?.[nextIndex] ?? 0;
+        animateVisitorToken(roomIndex, targetStopIndex, { instant });
       }
     }
 
@@ -2187,7 +2271,29 @@
               <span class="visitor-avatar"></span>
             </div>
             <div class="floor-door" aria-hidden="true"></div>
-            <div class="floor-caption">Guide bot route with four artwork stops mounted around the room.</div>
+
+            <div class="absolute left-10 bottom-10 z-20 flex flex-col gap-5 pointer-events-none">
+              <div class="flex flex-col gap-3">
+                <h4 class="text-[0.75rem] font-black uppercase tracking-[0.3em] text-earth/80 mb-1">Gallery Controls</h4>
+        
+                <div class="flex items-center gap-4">
+                  <span class="flex items-center justify-center w-16 h-10 bg-earth/20 border-2 border-earth/40 rounded-md text-2xl font-black text-earth" style="-webkit-text-stroke: 1.5px currentColor;">← →</span>
+                  <span class="text-[0.8rem] font-black uppercase tracking-widest text-earth">Change Rooms</span>
+                </div>
+
+                <div class="flex items-center gap-4">
+                  <span class="flex items-center justify-center w-16 h-10 bg-earth/20 border-2 border-earth/40 rounded-md text-2xl font-black text-earth" style="-webkit-text-stroke: 1.5px currentColor;">↑ ↓</span>
+                  <span class="text-[0.8rem] font-black uppercase tracking-widest text-earth">Move Bot</span>
+                </div>
+
+                <div class="flex items-center gap-4">
+                  <span class="flex items-center justify-center w-24 h-10 bg-earth/20 border-2 border-earth/40 rounded-md text-[0.85rem] font-black text-earth" style="-webkit-text-stroke: 1px currentColor;">ENTER</span>
+                  <span class="text-[0.8rem] font-black uppercase tracking-widest text-earth">Examine</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="floor-caption">Interactive Scale 1:25 <br> Rijksmuseum Virtual Gallery</div>
           </div>
         `;
 
@@ -2343,7 +2449,7 @@
         );
       }
 
-      return Promise.all([overlayAnimation.finished, cardAnimation.finished]).catch(() => {});
+      return Promise.all([overlayAnimation.finished, cardAnimation.finished]).catch(() => { });
     }
 
     // Matching close animation for the modal.
@@ -2372,7 +2478,7 @@
         }
       );
 
-      return Promise.all([overlayAnimation.finished, cardAnimation.finished]).catch(() => {});
+      return Promise.all([overlayAnimation.finished, cardAnimation.finished]).catch(() => { });
     }
 
     // Main entry point for opening an artwork from any room.
@@ -2467,7 +2573,9 @@
     setInteractiveState(deepDive, false);
     updateMap();
     rooms.forEach((room, roomIndex) => {
+      // Start the bot at the first artwork stop instead of a ghost entry
       if (room.routeStops?.[0]) {
+        visitorStopByRoom[roomIndex] = 0;
         setTokenPosition(getRoomVisitorToken(roomIndex), room.routeStops[0]);
         updateRouteStops(roomIndex, 0);
       }
@@ -2496,4 +2604,5 @@
     });
   </script>
 </body>
+
 </html>
