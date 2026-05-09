@@ -1886,8 +1886,28 @@
       }
     });
 
-    // Core content model for the project.
-    // Each room owns 4 artworks so the assignment requirement stays easy to verify.
+    /**
+     * Core content model for the entire gallery.
+     * This array holds all the data for the rooms and the artworks within them.
+     * To change text, images, or other content, this is the primary place to edit.
+     *
+     * Each room object contains:
+     * - code: A short identifier for the room (e.g., "Room 01").
+     * - shortTheme: A brief theme description.
+     * - title: The full title of the room.
+     * - accent, glow: Color codes for room-specific styling.
+     * - galleryClass: A CSS class for unique room layout.
+     * - routeStops: An array of {x, y} coordinates for the guide bot's path on the floor plan.
+     * - artworkStopMap: Maps artwork indices to route stop indices, so the bot knows where to go for each artwork.
+     * - artworks: An array of 4 artwork objects.
+     *
+     * Each artwork object contains:
+     * - slot: CSS class for positioning the artwork in the room plan.
+     * - title, artist, date, description: Information displayed in the deep-dive overlay.
+     * - image: URL for the artwork image.
+     * - link: URL to the artwork's page on the Rijksmuseum website.
+     * - placement: A descriptive location for the artwork within the room.
+     */
     const rooms = [
       {
         code: "Room 01",
@@ -2090,14 +2110,31 @@
     const roomPanels = Array.from(document.querySelectorAll(".room"));
     const roomPills = Array.from(document.querySelectorAll(".room-pill"));
 
+    // --- STATE MANAGEMENT ---
+    // These variables track the current state of the gallery interaction.
+
+    // `activeRoom`: Index of the currently displayed room (0, 1, or 2).
     let activeRoom = 0;
+    // `activeCard`: DOM element of the artwork card that is currently open in the deep-dive view.
     let activeCard = null;
+    // `focusedArtworkByRoom`: An array to remember the last focused artwork index for each room.
     let focusedArtworkByRoom = rooms.map(() => 0);
+    // `visitorStopByRoom`: An array to track the guide bot's current stop index in each room.
     let visitorStopByRoom = rooms.map(() => 0);
+    // `openArtwork`: An object holding the { roomIndex, artworkIndex } of the artwork in the deep-dive view.
     let openArtwork = null;
+    // `lastFocusedCard`: DOM element of the last card that was clicked to open the deep-dive, for focus restoration.
     let lastFocusedCard = null;
+    // `focusableSelector`: A CSS selector to find all interactive elements for accessibility management.
     const focusableSelector = 'a[href], button, input, select, textarea, [tabindex]';
 
+    /**
+     * Manages accessibility by making elements interactive or inert.
+     * When a container (like a room or the deep-dive overlay) is not active,
+     * this function hides it from screen readers and removes its children from the tab order.
+     * @param {HTMLElement} container The container element.
+     * @param {boolean} isActive Whether the container should be interactive.
+     */
     function setInteractiveState(container, isActive) {
       if (!container) {
         return;
@@ -2115,22 +2152,36 @@
       });
     }
 
+    // --- DOM HELPER FUNCTIONS ---
+    // These are small utility functions to get specific elements within a room's structure.
+
+    // Gets the floor plan element for a given room.
     function getRoomFloor(roomIndex) {
       return document.querySelector(`#room-${roomIndex}-gallery .room-floor`);
     }
 
+    // Gets the guide bot (visitor token) element for a given room.
     function getRoomVisitorToken(roomIndex) {
       return document.querySelector(`#room-${roomIndex}-gallery .visitor-token`);
     }
 
+    // Gets all artwork card elements for a given room.
     function getRoomArtworkCards(roomIndex) {
       return Array.from(document.querySelectorAll(`#room-${roomIndex}-gallery .art-card`));
     }
 
+    // Gets all route node (the dots on the path) elements for a given room.
     function getRoomRouteNodes(roomIndex) {
       return Array.from(document.querySelectorAll(`#room-${roomIndex}-gallery .route-node`));
     }
 
+    // --- GUIDE BOT AND NAVIGATION LOGIC ---
+
+    /**
+     * Instantly moves the guide bot to a specific stop's coordinates.
+     * @param {HTMLElement} token The guide bot element.
+     * @param {object} stop The stop object with {x, y} coordinates.
+     */
     function setTokenPosition(token, stop) {
       if (!token || !stop) {
         return;
@@ -2140,12 +2191,22 @@
       token.style.top = `${stop.y}%`;
     }
 
+    /**
+     * Updates the visual state of the route nodes on the floor plan.
+     * The active stop is highlighted to show the bot's current location.
+     * @param {number} roomIndex The index of the current room.
+     * @param {number} activeStopIndex The index of the stop to highlight.
+     */
     function updateRouteStops(roomIndex, activeStopIndex) {
       getRoomRouteNodes(roomIndex).forEach((node, index) => {
         node.classList.toggle("is-active", index === activeStopIndex);
       });
     }
 
+    /**
+     * Calculates the shortest path for the guide bot to travel between two stops on the route.
+     * It checks both clockwise and counter-clockwise paths and returns the shorter sequence of stops.
+     */
     function buildStopSequence(stopCount, currentIndex, targetIndex) {
       if (stopCount <= 1 || currentIndex === targetIndex) {
         return [targetIndex];
@@ -2168,6 +2229,13 @@
       return clockwise.length <= counterClockwise.length ? clockwise : counterClockwise;
     }
 
+    /**
+     * Animates the guide bot's movement from its current stop to a target stop.
+     * It uses the Web Animations API to create a smooth path along the sequence of stops.
+     * @param {number} roomIndex The index of the current room.
+     * @param {number} targetStopIndex The index of the destination stop.
+     * @param {object} [options] - Optional parameters.
+     */
     function animateVisitorToken(roomIndex, targetStopIndex, options = {}) {
       const { instant = false } = options;
       const token = getRoomVisitorToken(roomIndex);
@@ -2225,6 +2293,13 @@
       visitorStopByRoom[roomIndex] = boundedTargetIndex;
     }
 
+    /**
+     * Sets the focus to a specific artwork within a room.
+     * This updates the UI to highlight the focused artwork and optionally moves the guide bot to the corresponding stop.
+     * @param {number} roomIndex The index of the current room.
+     * @param {number} artworkIndex The index of the artwork to focus.
+     * @param {object} [options] - Optional parameters.
+     */
     function focusArtwork(roomIndex, artworkIndex, options = {}) {
       const { moveVisitor = true, instant = false } = options; // Removed 'fromEntry'
       const cards = getRoomArtworkCards(roomIndex);
@@ -2245,12 +2320,18 @@
       }
     }
 
-    // Build all artwork cards from the data above so the HTML stays manageable.
+    /**
+     * Dynamically builds the HTML for all rooms and their contents.
+     * This function iterates through the `rooms` data object and generates the floor plan,
+     * guide bot path, artwork cards, and control instructions for each room.
+     * This keeps the main HTML file cleaner and makes the gallery data-driven.
+     */
     function buildRooms() {
       rooms.forEach((room, roomIndex) => {
         const gallery = document.getElementById(`room-${roomIndex}-gallery`);
         if (!gallery) return;
 
+        // The main template for a room's floor plan and associated elements.
         gallery.innerHTML = `
           <div class="room-floor">
             <div class="floor-note">
@@ -2260,12 +2341,14 @@
             <div class="floor-axis floor-axis--north">North wall</div>
             <div class="floor-axis floor-axis--east">East wall</div>
             <div class="floor-axis floor-axis--entry">Entry portal</div>
+            <!-- The SVG polyline draws the dashed path for the guide bot. -->
             <div class="route-map" aria-hidden="true">
               <svg class="route-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
                 <polyline class="route-line" points="${room.routeStops.map((stop) => `${stop.x},${stop.y}`).join(" ")} ${room.routeStops[0].x},${room.routeStops[0].y}"></polyline>
               </svg>
               ${room.routeStops.map((stop, stopIndex) => `<span class="route-node${stopIndex === 0 ? " is-entry" : ""}" style="left:${stop.x}%; top:${stop.y}%;" aria-hidden="true"></span>`).join("")}
             </div>
+            <!-- This is the guide bot avatar. -->
             <div class="visitor-token" aria-hidden="true">
               <span class="visitor-ping"></span>
               <span class="visitor-avatar"></span>
@@ -2273,6 +2356,7 @@
             <div class="floor-door" aria-hidden="true"></div>
 
             <div class="absolute left-10 bottom-10 z-20 flex flex-col gap-5 pointer-events-none">
+              <!-- This section is the on-screen legend for keyboard controls. -->
               <div class="flex flex-col gap-3">
                 <h4 class="text-[0.75rem] font-black uppercase tracking-[0.3em] text-earth/80 mb-1">Gallery Controls</h4>
         
@@ -2300,12 +2384,13 @@
         const floor = gallery.querySelector(".room-floor");
         if (!floor) return;
 
-        // Push each room's accent colors into CSS custom properties for styling.
+        // Set CSS custom properties for the room's accent colors, allowing for themeable components.
         if (gallery.parentElement && gallery.parentElement.parentElement) {
           gallery.parentElement.parentElement.style.setProperty("--room-accent", room.accent);
           gallery.parentElement.parentElement.style.setProperty("--room-glow", room.glow);
         }
 
+        // Iterate through the artworks for the current room and create a button for each one.
         room.artworks.forEach((artwork, artworkIndex) => {
           const button = document.createElement("button");
           button.type = "button";
@@ -2314,6 +2399,7 @@
           button.dataset.artIndex = artworkIndex;
           button.setAttribute("aria-label", `Open ${artwork.title} by ${artwork.artist}`);
           button.style.setProperty("--reveal-delay", `${140 + artworkIndex * 110}ms`);
+          // The HTML content for an artwork card.
           button.innerHTML = `
             <div class="frame">
               <img src="${artwork.image}" alt="${artwork.title}">
@@ -2325,12 +2411,17 @@
             </div>
           `;
 
+          // When an artwork card is clicked, open the deep-dive overlay.
           button.addEventListener("click", () => openDeepDive(roomIndex, artworkIndex, button));
           floor.appendChild(button);
         });
       });
     }
 
+    /**
+     * Updates the UI to reflect the currently active room.
+     * It shows the correct room panel and highlights the corresponding navigation pill.
+     */
     function updateMap() {
       roomPanels.forEach((panel, index) => {
         const isActive = index === activeRoom;
@@ -2347,6 +2438,12 @@
       document.documentElement.style.setProperty("--room-index", activeRoom);
     }
 
+    /**
+     * Activates a room by its index.
+     * This is the main function for switching between rooms.
+     * @param {number} index The index of the room to activate.
+     * @param {object} [options] - Optional parameters.
+     */
     function activateRoom(index, options = {}) {
       const { enterGallery = false } = options;
       const nextRoom = (index + rooms.length) % rooms.length;
@@ -2355,16 +2452,24 @@
       updateMap();
       focusArtwork(activeRoom, focusedArtworkByRoom[activeRoom], { fromEntry: roomChanged });
 
+      // If the user clicked an "Enter Gallery" button, scroll the gallery into view.
       if (enterGallery && galleryShell) {
         galleryShell.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
 
+    /**
+     * A helper function to navigate to the next or previous room.
+     * @param {number} delta -1 for the previous room, 1 for the next room.
+     */
     function stepRoom(delta) {
       activateRoom(activeRoom + delta);
     }
 
-    // Visually mark the last artwork that opened the overlay.
+    /**
+     * Adds a visual marker to the artwork card that is currently open in the deep-dive view.
+     * @param {HTMLElement} sourceCard The artwork card element.
+     */
     function markActiveCard(sourceCard) {
       if (activeCard) {
         activeCard.classList.remove("is-active");
@@ -2375,7 +2480,11 @@
       }
     }
 
-    // Copy the selected artwork data into the overlay panel.
+    /**
+     * Populates the deep-dive overlay with the data of the selected artwork.
+     * @param {number} roomIndex The index of the room the artwork is in.
+     * @param {number} artworkIndex The index of the selected artwork.
+     */
     function populateDeepDive(roomIndex, artworkIndex) {
       const room = rooms[roomIndex];
       const artwork = room.artworks[artworkIndex];
@@ -2393,7 +2502,11 @@
       diveImage.alt = artwork.title;
     }
 
-    // Web Animations API entrance for the deep-dive modal.
+    /**
+     * Animates the opening of the deep-dive overlay using the Web Animations API.
+     * This creates a smooth fade-in and scale-up effect.
+     * @param {HTMLElement} sourceCard The card that was clicked to open the dive.
+     */
     function animateDiveOpen(sourceCard) {
       deepDive.classList.add("is-open");
       setInteractiveState(deepDive, true);
@@ -2452,7 +2565,10 @@
       return Promise.all([overlayAnimation.finished, cardAnimation.finished]).catch(() => { });
     }
 
-    // Matching close animation for the modal.
+    /**
+     * Animates the closing of the deep-dive overlay.
+     * This creates a smooth fade-out effect.
+     */
     function animateDiveClose() {
       const overlayAnimation = deepDive.animate(
         [
@@ -2481,7 +2597,13 @@
       return Promise.all([overlayAnimation.finished, cardAnimation.finished]).catch(() => { });
     }
 
-    // Main entry point for opening an artwork from any room.
+    /**
+     * The main function to open the deep-dive view for a specific artwork.
+     * It orchestrates focusing, populating, and animating the overlay.
+     * @param {number} roomIndex The index of the room.
+     * @param {number} artworkIndex The index of the artwork.
+     * @param {HTMLElement} sourceCard The card element that was clicked.
+     */
     async function openDeepDive(roomIndex, artworkIndex, sourceCard) {
       activateRoom(roomIndex);
       focusArtwork(roomIndex, artworkIndex);
@@ -2491,7 +2613,10 @@
       await animateDiveOpen(sourceCard);
     }
 
-    // Close the artwork overlay and restore keyboard focus to the last clicked card.
+    /**
+     * Closes the deep-dive overlay, runs the closing animation, and restores focus
+     * to the artwork card that was last clicked.
+     */
     async function closeDeepDive() {
       if (!deepDive.classList.contains("is-open")) {
         return;
@@ -2504,8 +2629,13 @@
       }
     }
 
-    // Register all non-generated interactions: room jumps, overlay close, and keyboard nav.
+    /**
+     * Binds all the event listeners for user interactions.
+     * This includes clicks on room navigation buttons, closing the deep-dive,
+     * and all keyboard navigation (arrow keys, Escape, Enter).
+     */
     function bindControls() {
+      // Clicks on room switcher pills and "Move to Room" buttons.
       document.querySelectorAll("[data-jump-room]").forEach((button) => {
         button.addEventListener("click", () => {
           activateRoom(Number(button.dataset.jumpRoom), {
@@ -2514,6 +2644,7 @@
         });
       });
 
+      // Clicks on the close button or the background of the deep-dive overlay.
       closeDiveButton.addEventListener("click", closeDeepDive);
       deepDive.addEventListener("click", (event) => {
         if (event.target === deepDive) {
@@ -2521,8 +2652,9 @@
         }
       });
 
+      // Keyboard navigation logic.
       document.addEventListener("keydown", (event) => {
-        // Escape closes the overlay. Left/right switch rooms. Up/down move between works.
+        // If the overlay is open, "Escape" is the only active key and it closes the overlay.
         if (deepDive.classList.contains("is-open") && event.key === "Escape") {
           closeDeepDive();
           return;
@@ -2532,26 +2664,28 @@
           return;
         }
 
+        // Prevent default browser action for arrow keys to avoid scrolling.
         if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
           event.preventDefault();
         }
 
+        // Left/Right arrows switch between rooms.
         if (event.key === "ArrowLeft") {
           stepRoom(-1);
         }
-
         if (event.key === "ArrowRight") {
           stepRoom(1);
         }
 
+        // Up/Down arrows move the guide bot between artworks in the current room.
         if (event.key === "ArrowUp") {
           focusArtwork(activeRoom, focusedArtworkByRoom[activeRoom] - 1);
         }
-
         if (event.key === "ArrowDown") {
           focusArtwork(activeRoom, focusedArtworkByRoom[activeRoom] + 1);
         }
 
+        // "Enter" or "Space" opens the deep-dive for the currently focused artwork.
         if (event.key === "Enter" || event.key === " ") {
           const cards = getRoomArtworkCards(activeRoom);
           const card = cards[focusedArtworkByRoom[activeRoom]];
@@ -2562,16 +2696,24 @@
         }
       });
 
+      // Re-center the guide bot if the window is resized, to ensure it stays in the correct position.
       window.addEventListener("resize", () => {
         focusArtwork(activeRoom, focusedArtworkByRoom[activeRoom], { instant: true });
       });
     }
 
-    // Initial page bootstrapping.
+    // --- INITIALIZATION ---
+    // This code runs when the page first loads to set up the gallery.
+
+    // Dynamically generate the room content from the `rooms` data.
     buildRooms();
+    // Set up all the interactive controls.
     bindControls();
+    // Initially, the deep-dive overlay is hidden and not interactive.
     setInteractiveState(deepDive, false);
+    // Set the initial active room UI.
     updateMap();
+    // For each room, set the initial position of the guide bot and focus the first artwork.
     rooms.forEach((room, roomIndex) => {
       // Start the bot at the first artwork stop instead of a ghost entry
       if (room.routeStops?.[0]) {
@@ -2582,7 +2724,11 @@
       focusArtwork(roomIndex, focusedArtworkByRoom[roomIndex], { instant: true });
     });
 
-    // Reveal items progressively as the user scrolls down the page.
+    /**
+     * Sets up an IntersectionObserver to reveal elements as they scroll into view.
+     * This creates a "fade-in and slide-up" animation for a more polished feel.
+     * Elements with the `.reveal-item` class will be observed.
+     */
     const observerOptions = {
       threshold: 0.18,
       rootMargin: '0px 0px -10% 0px'
@@ -2591,14 +2737,14 @@
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Each reveal item animates only once to avoid flicker while scrolling back upward.
+          // The `is-visible` class triggers the CSS animation.
           entry.target.classList.add('is-visible');
+          // Once an item is visible, we don't need to observe it anymore.
           observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
-    // Attach reveal animations to any element that opted into the shared reveal system.
     document.querySelectorAll('.reveal-item').forEach(item => {
       observer.observe(item);
     });
